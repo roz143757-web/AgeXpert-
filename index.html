@@ -1,0 +1,1647 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AgeXpert</title>
+
+<style>
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:Arial, sans-serif;
+  -webkit-tap-highlight-color:transparent;
+  user-select:none;
+}
+
+:root{
+  --primary:#7c3aed;
+  --primary2:#ff4d8d;
+  --accent:#ff9f43;
+  --text:#1f2330;
+  --muted:#6d7280;
+  --border:rgba(124,58,237,.28);
+  --glass:rgba(255,255,255,.78);
+  --softBg:#fff7fb;
+  --softBg2:#f7f1ff;
+}
+
+body{
+  min-height:100vh;
+  color:var(--text);
+  overflow-x:hidden;
+  background:linear-gradient(135deg,var(--softBg),var(--softBg2));
+}
+
+body.no-anim *,
+body.no-anim *::before,
+body.no-anim *::after{
+  animation:none !important;
+  transition:none !important;
+}
+
+body.compact .card{
+  padding:12px;
+  border-radius:20px;
+  margin-bottom:11px;
+}
+
+body.compact .select-box{
+  height:56px;
+  padding:7px 9px;
+}
+
+body.compact .info-line{
+  padding:12px;
+  margin-bottom:8px;
+}
+
+body.compact .age-main{
+  padding:15px;
+}
+
+body.compact .content{
+  padding:12px 14px 24px;
+}
+
+.bg-blob{
+  position:fixed;
+  border-radius:50%;
+  filter:blur(35px);
+  opacity:.42;
+  z-index:-1;
+  animation:floatBlob 8s ease-in-out infinite alternate;
+}
+
+.blob1{
+  width:230px;
+  height:230px;
+  background:var(--primary2);
+  top:-60px;
+  left:-70px;
+}
+
+.blob2{
+  width:260px;
+  height:260px;
+  background:var(--primary);
+  right:-90px;
+  bottom:120px;
+  animation-delay:1s;
+}
+
+.blob3{
+  width:180px;
+  height:180px;
+  background:var(--accent);
+  left:40px;
+  bottom:-70px;
+  animation-delay:2s;
+}
+
+@keyframes floatBlob{
+  from{transform:translate(0,0) scale(1);}
+  to{transform:translate(30px,25px) scale(1.08);}
+}
+
+.app{
+  max-width:430px;
+  margin:auto;
+  min-height:100vh;
+  padding-bottom:92px;
+}
+
+.sticky-header{
+  position:sticky;
+  top:0;
+  z-index:50;
+  background:rgba(255,255,255,.90);
+  backdrop-filter:blur(14px);
+  padding:8px 14px 12px;
+  box-shadow:0 8px 24px rgba(124,58,237,.12);
+  border-bottom-left-radius:26px;
+  border-bottom-right-radius:26px;
+}
+
+.header-pill{
+  min-height:62px;
+  border:1.8px solid var(--border);
+  border-radius:30px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:linear-gradient(135deg,rgba(255,255,255,.95),rgba(255,240,248,.94));
+  box-shadow:0 0 26px rgba(255,77,141,.18);
+}
+
+.title-box{
+  text-align:center;
+}
+
+.title-box h1{
+  font-size:30px;
+  color:#1f2330;
+  font-weight:900;
+  line-height:1;
+}
+
+.title-box h1 span{
+  background:linear-gradient(135deg,var(--primary),var(--primary2));
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+}
+
+.title-box p{
+  margin-top:5px;
+  color:#5e6472;
+  font-size:12px;
+  font-weight:800;
+}
+
+.title-box p::before,
+.title-box p::after{
+  content:"";
+  display:inline-block;
+  width:24px;
+  height:2px;
+  background:linear-gradient(90deg,var(--primary),var(--primary2));
+  border-radius:20px;
+  vertical-align:middle;
+  margin:0 7px;
+}
+
+.content{
+  padding:16px 16px 28px;
+}
+
+.page{
+  display:none;
+}
+
+.page.active{
+  display:block;
+  animation:fadeUp .35s ease;
+}
+
+.card{
+  border:1.8px solid var(--border);
+  border-radius:25px;
+  background:var(--glass);
+  backdrop-filter:blur(12px);
+  padding:16px;
+  margin-bottom:15px;
+  box-shadow:0 15px 35px rgba(124,58,237,.13);
+}
+
+.label-row{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  margin-bottom:14px;
+}
+
+.label-left{
+  display:flex;
+  align-items:center;
+  gap:11px;
+  font-size:17px;
+  font-weight:900;
+}
+
+.icon{
+  width:39px;
+  height:39px;
+  border-radius:14px;
+  background:linear-gradient(135deg,#fff0f7,#ffffff);
+  color:var(--primary);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:20px;
+  border:1px solid rgba(124,58,237,.16);
+  box-shadow:0 8px 16px rgba(124,58,237,.09);
+  flex-shrink:0;
+}
+
+.refresh-btn{
+  width:39px;
+  height:39px;
+  border-radius:14px;
+  border:1.7px solid rgba(124,58,237,.35);
+  background:#ffffff;
+  color:var(--primary);
+  font-size:20px;
+  font-weight:900;
+  cursor:pointer;
+}
+
+.dob-row{
+  display:grid;
+  grid-template-columns:1fr 1fr 1fr;
+  gap:9px;
+  margin-bottom:17px;
+}
+
+.select-box{
+  border:1.8px solid rgba(124,58,237,.32);
+  border-radius:16px;
+  padding:9px 10px;
+  background:rgba(255,255,255,.94);
+  height:64px;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  box-shadow:0 8px 18px rgba(124,58,237,.07);
+}
+
+.select-title{
+  color:#6d6175;
+  font-size:11px;
+  font-weight:900;
+  margin-bottom:3px;
+}
+
+select{
+  width:100%;
+  border:none;
+  outline:none;
+  background:transparent;
+  color:#1f2330;
+  font-size:16px;
+  font-weight:900;
+  height:26px;
+}
+
+.gender-row,
+.option-row{
+  display:grid;
+  grid-template-columns:1fr 1fr 1fr;
+  gap:9px;
+  margin-bottom:17px;
+}
+
+.lang-row{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:9px;
+}
+
+.gender-box,
+.option-btn{
+  border:1.8px solid rgba(124,58,237,.32);
+  border-radius:16px;
+  padding:12px 6px;
+  text-align:center;
+  font-size:15px;
+  font-weight:900;
+  color:#1f2330;
+  background:rgba(255,255,255,.94);
+  cursor:pointer;
+  box-shadow:0 8px 18px rgba(124,58,237,.07);
+  transition:.22s ease;
+}
+
+.gender-box.active,
+.option-btn.active{
+  background:linear-gradient(135deg,var(--primary),var(--primary2));
+  color:white;
+  border-color:var(--primary);
+  box-shadow:0 12px 24px rgba(255,77,141,.25);
+}
+
+button{
+  transition:.18s ease;
+}
+
+button:active,
+.gender-box:active,
+.nav-item:active,
+.option-btn:active{
+  transform:translateY(3px) scale(.96);
+  opacity:.88;
+}
+
+.main-btn,
+.copy-btn,
+.clear-btn{
+  position:relative;
+  overflow:hidden;
+}
+
+.main-btn::after,
+.copy-btn::after,
+.clear-btn::after{
+  content:"";
+  position:absolute;
+  top:0;
+  left:-80%;
+  width:45%;
+  height:100%;
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,.38),transparent);
+  transform:skewX(-18deg);
+  animation:shine 2.8s infinite;
+}
+
+@keyframes shine{
+  0%{left:-80%;}
+  55%{left:125%;}
+  100%{left:125%;}
+}
+
+.main-btn{
+  width:100%;
+  padding:15px;
+  border:none;
+  border-radius:17px;
+  background:linear-gradient(135deg,var(--primary),var(--primary2));
+  color:white;
+  font-size:18px;
+  font-weight:900;
+  box-shadow:0 14px 28px rgba(255,77,141,.25);
+}
+
+.loading-box{
+  display:none;
+  text-align:center;
+  padding:18px;
+  margin-bottom:15px;
+  border-radius:22px;
+  background:rgba(255,255,255,.82);
+  border:1.8px solid rgba(124,58,237,.24);
+  box-shadow:0 12px 30px rgba(124,58,237,.12);
+}
+
+.loader{
+  width:44px;
+  height:44px;
+  border:5px solid #f1d8fb;
+  border-top:5px solid var(--primary2);
+  border-radius:50%;
+  margin:0 auto 10px;
+  animation:spin 1s linear infinite;
+}
+
+@keyframes spin{
+  to{transform:rotate(360deg);}
+}
+
+.loading-box p{
+  font-weight:900;
+  color:var(--primary);
+}
+.result{
+  display:none;
+  animation:fadeUp .35s ease;
+}
+
+@keyframes fadeUp{
+  from{opacity:0;transform:translateY(14px);}
+  to{opacity:1;transform:translateY(0);}
+}
+
+.age-main{
+  border:1.8px solid rgba(124,58,237,.28);
+  border-radius:25px;
+  padding:20px 16px;
+  margin-bottom:14px;
+  background:linear-gradient(135deg,rgba(255,240,248,.96),rgba(255,255,255,.96));
+  box-shadow:0 0 32px rgba(255,77,141,.20);
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+}
+
+.age-main .icon{
+  margin-bottom:8px;
+}
+
+.age-main small{
+  font-size:14px;
+  color:#574a63;
+  font-weight:800;
+}
+
+.age-main h2{
+  font-size:43px;
+  background:linear-gradient(135deg,var(--primary),var(--primary2));
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+  margin-top:6px;
+}
+
+.age-main p{
+  font-size:19px;
+  font-weight:900;
+  color:#2b2d3a;
+}
+
+.info-line{
+  border:1.8px solid rgba(124,58,237,.22);
+  border-radius:17px;
+  padding:16px 14px;
+  margin-bottom:10px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+  background:rgba(255,255,255,.88);
+  box-shadow:0 8px 20px rgba(124,58,237,.07);
+}
+
+.info-line.typing{
+  opacity:0;
+  transform:translateY(10px);
+  animation:typeLine .45s forwards;
+}
+
+@keyframes typeLine{
+  to{
+    opacity:1;
+    transform:translateY(0);
+  }
+}
+
+.birthday-pop{
+  animation:birthdayPulse 1.4s infinite;
+}
+
+@keyframes birthdayPulse{
+  0%{transform:scale(1);}
+  50%{transform:scale(1.015);}
+  100%{transform:scale(1);}
+}
+
+.info-left{
+  color:#2b2d3a;
+  font-size:16px;
+  font-weight:900;
+}
+
+.info-value{
+  color:var(--primary);
+  font-size:16px;
+  font-weight:900;
+  text-align:right;
+}
+
+.progress-card{
+  border:1.8px solid rgba(124,58,237,.28);
+  border-radius:24px;
+  padding:16px;
+  margin-top:12px;
+  margin-bottom:14px;
+  background:rgba(255,255,255,.90);
+  box-shadow:0 10px 24px rgba(124,58,237,.09);
+}
+
+.progress-top{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  font-size:15px;
+  font-weight:900;
+  color:#2b2d3a;
+  gap:8px;
+}
+
+.life-title{
+  display:flex;
+  align-items:center;
+  gap:9px;
+}
+
+.progress-top span:last-child{
+  color:var(--primary);
+  text-align:right;
+}
+
+.progress{
+  height:12px;
+  background:#f0defd;
+  border-radius:20px;
+  margin-top:14px;
+  overflow:hidden;
+}
+
+.bar{
+  width:0%;
+  height:100%;
+  background:linear-gradient(90deg,var(--primary),var(--primary2),var(--accent));
+  border-radius:20px;
+  transition:width .8s ease;
+}
+
+.progress-card p{
+  margin-top:12px;
+  color:#6d7280;
+  font-size:13px;
+  text-align:center;
+  font-weight:700;
+}
+
+.copy-btn{
+  width:100%;
+  padding:17px;
+  border-radius:18px;
+  font-size:17px;
+  font-weight:900;
+  border:none;
+  background:linear-gradient(135deg,var(--primary),var(--primary2));
+  color:#fff;
+  box-shadow:0 14px 28px rgba(255,77,141,.25);
+  margin-bottom:12px;
+}
+
+.section-title{
+  font-size:15px;
+  font-weight:900;
+  color:var(--muted);
+  margin:12px 0 10px;
+}
+
+.saved-item{
+  border:1.8px solid rgba(124,58,237,.22);
+  border-radius:18px;
+  padding:14px;
+  margin-bottom:12px;
+  background:rgba(255,255,255,.88);
+  box-shadow:0 8px 20px rgba(124,58,237,.07);
+}
+
+.saved-item h3{
+  color:var(--primary);
+  font-size:20px;
+  margin-bottom:8px;
+}
+
+.saved-item p{
+  color:#2b2d3a;
+  font-size:14px;
+  font-weight:800;
+  line-height:1.7;
+}
+
+.delete-btn{
+  width:100%;
+  margin-top:10px;
+  padding:12px;
+  border:none;
+  border-radius:14px;
+  background:rgba(255,77,141,.12);
+  color:var(--primary2);
+  font-size:14px;
+  font-weight:900;
+}
+
+.clear-btn{
+  width:100%;
+  padding:15px;
+  border:none;
+  border-radius:17px;
+  background:linear-gradient(135deg,#ff4d8d,#ff6b6b);
+  color:white;
+  font-size:17px;
+  font-weight:900;
+  box-shadow:0 14px 28px rgba(255,77,141,.20);
+  margin-top:10px;
+}
+
+.setting-box{
+  border:1.8px solid rgba(124,58,237,.22);
+  border-radius:18px;
+  padding:14px;
+  margin-bottom:12px;
+  background:rgba(255,255,255,.88);
+  box-shadow:0 8px 20px rgba(124,58,237,.07);
+}
+
+.setting-box h3{
+  font-size:16px;
+  color:#2b2d3a;
+  margin-bottom:10px;
+}
+
+.switch-row{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+}
+
+.switch{
+  width:58px;
+  height:32px;
+  border-radius:40px;
+  background:linear-gradient(135deg,var(--primary),var(--primary2));
+  padding:4px;
+  cursor:pointer;
+}
+
+.switch-dot{
+  width:24px;
+  height:24px;
+  border-radius:50%;
+  background:#fff;
+  transform:translateX(26px);
+  transition:.22s ease;
+}
+
+.switch.off{
+  background:#d1d5db;
+}
+
+.switch.off .switch-dot{
+  transform:translateX(0);
+}
+
+.app-info{
+  color:#6d7280;
+  font-size:14px;
+  font-weight:800;
+  line-height:1.8;
+}
+
+.bottom-nav{
+  position:fixed;
+  left:50%;
+  bottom:14px;
+  transform:translateX(-50%);
+  width:min(390px,92%);
+  height:64px;
+  border-radius:28px;
+  background:rgba(255,255,255,.82);
+  backdrop-filter:blur(16px);
+  border:1.8px solid rgba(124,58,237,.25);
+  box-shadow:0 14px 32px rgba(124,58,237,.16);
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  z-index:60;
+}
+
+.nav-item{
+  border:none;
+  background:transparent;
+  color:#6d7280;
+  font-size:12px;
+  font-weight:900;
+}
+
+.nav-item span{
+  display:block;
+  font-size:19px;
+  margin-bottom:2px;
+}
+
+.nav-item.active{
+  color:var(--primary);
+}
+
+.toast{
+  position:fixed;
+  left:50%;
+  bottom:88px;
+  transform:translateX(-50%);
+  background:#1f2330;
+  color:#fff;
+  padding:12px 18px;
+  border-radius:18px;
+  font-size:14px;
+  font-weight:700;
+  display:none;
+  z-index:100;
+}
+</style>
+</head>
+
+<body>
+
+<div class="bg-blob blob1"></div>
+<div class="bg-blob blob2"></div>
+<div class="bg-blob blob3"></div>
+
+<div class="app">
+
+  <div class="sticky-header">
+    <div class="header-pill">
+      <div class="title-box">
+        <h1>Age<span>Xpert</span></h1>
+        <p data-i18n="subtitle">Smart Age & DOB Analyzer</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="content">
+
+    <!-- HOME PAGE -->
+    <div class="page active" id="homePage">
+
+      <div class="card">
+        <div class="label-row">
+          <div class="label-left">
+            <div class="icon">📅</div>
+            <span data-i18n="enterDob">Enter Date of Birth</span>
+          </div>
+          <button class="refresh-btn" onclick="resetApp()">↻</button>
+        </div>
+
+        <div class="dob-row">
+          <div class="select-box">
+            <div class="select-title" data-i18n="day">Day</div>
+            <select id="day"></select>
+          </div>
+
+          <div class="select-box">
+            <div class="select-title" data-i18n="month">Month</div>
+            <select id="month"></select>
+          </div>
+
+          <div class="select-box">
+            <div class="select-title" data-i18n="year">Year</div>
+            <select id="year"></select>
+          </div>
+        </div>
+
+        <div class="label-row">
+          <div class="label-left">
+            <div class="icon">👤</div>
+            <span><span data-i18n="gender">Gender</span> <small style="color:#6d7280;" data-i18n="optional">(Optional)</small></span>
+          </div>
+        </div>
+
+        <div class="gender-row">
+          <div class="gender-box active" onclick="selectGender(this,'Male')" data-i18n="male">Male</div>
+          <div class="gender-box" onclick="selectGender(this,'Female')" data-i18n="female">Female</div>
+          <div class="gender-box" onclick="selectGender(this,'Other')" data-i18n="other">Other</div>
+        </div>
+
+        <button class="main-btn" onclick="calculateAge()" data-i18n="analyzeAge">Analyze Age</button>
+      </div>
+
+      <div class="loading-box" id="loadingBox">
+        <div class="loader"></div>
+        <p data-i18n="analyzing">Analyzing Your Age...</p>
+      </div>
+
+      <div class="result" id="resultBox">
+
+        <div class="age-main">
+          <small data-i18n="currentAge">Your Current Age</small>
+          <h2 id="mainAge">0 Years</h2>
+          <p id="subAge">0 Months 0 Days</p>
+        </div>
+
+        <div id="lineResults"></div>
+
+        <div class="progress-card">
+          <div class="progress-top">
+            <div class="life-title">
+              <div class="icon">♡</div>
+              <span><span data-i18n="lifeProgress">Life Progress</span> <small style="color:#6d7280;">(<span data-i18n="basedOn">Based on</span> <b id="lifeBaseText">75</b> <span data-i18n="years">Years</span>)</small></span>
+            </div>
+            <span id="lifePercent">0%</span>
+          </div>
+
+          <div class="progress">
+            <div class="bar" id="lifeBar"></div>
+          </div>
+
+          <p id="lifeText">You have completed 0% of your expected life journey.</p>
+        </div>
+
+        <button class="copy-btn" onclick="copyResult()" data-i18n="copyResult">Copy Result</button>
+
+      </div>
+    </div>
+<!-- COMPARE PAGE -->
+    <div class="page" id="comparePage">
+
+      <div class="card">
+        <div class="label-row">
+          <div class="label-left">
+            <div class="icon">⚖️</div>
+            <span data-i18n="compareAges">Compare Ages</span>
+          </div>
+        </div>
+
+        <div class="section-title" data-i18n="firstDob">First Date of Birth</div>
+        <div class="dob-row">
+          <div class="select-box">
+            <div class="select-title" data-i18n="day">Day</div>
+            <select id="c1day"></select>
+          </div>
+
+          <div class="select-box">
+            <div class="select-title" data-i18n="month">Month</div>
+            <select id="c1month"></select>
+          </div>
+
+          <div class="select-box">
+            <div class="select-title" data-i18n="year">Year</div>
+            <select id="c1year"></select>
+          </div>
+        </div>
+
+        <div class="section-title" data-i18n="secondDob">Second Date of Birth</div>
+        <div class="dob-row">
+          <div class="select-box">
+            <div class="select-title" data-i18n="day">Day</div>
+            <select id="c2day"></select>
+          </div>
+
+          <div class="select-box">
+            <div class="select-title" data-i18n="month">Month</div>
+            <select id="c2month"></select>
+          </div>
+
+          <div class="select-box">
+            <div class="select-title" data-i18n="year">Year</div>
+            <select id="c2year"></select>
+          </div>
+        </div>
+
+        <button class="main-btn" onclick="compareAges()" data-i18n="compareNow">Compare Now</button>
+      </div>
+
+      <div id="compareResult"></div>
+
+    </div>
+
+
+    <!-- SAVED PAGE -->
+    <div class="page" id="savedPage">
+
+      <div class="card">
+        <div class="label-row">
+          <div class="label-left">
+            <div class="icon">💾</div>
+            <span data-i18n="savedResults">Saved Results</span>
+          </div>
+        </div>
+
+        <div id="savedList"></div>
+
+        <button class="clear-btn" onclick="clearSavedResults()" data-i18n="clearAllSaved">Clear All Saved</button>
+      </div>
+
+    </div>
+
+
+    <!-- SETTINGS PAGE -->
+    <div class="page" id="settingsPage">
+
+      <div class="card">
+        <div class="label-row">
+          <div class="label-left">
+            <div class="icon">⚙️</div>
+            <span data-i18n="settings">Settings</span>
+          </div>
+        </div>
+
+        <div class="setting-box">
+          <h3 data-i18n="language">Language</h3>
+          <div class="lang-row">
+            <button class="option-btn active" id="langEn" onclick="setLanguage('en')">English</button>
+            <button class="option-btn" id="langAs" onclick="setLanguage('as')">অসমীয়া</button>
+            <button class="option-btn" id="langHi" onclick="setLanguage('hi')">हिन्दी</button>
+            <button class="option-btn" id="langHg" onclick="setLanguage('hg')">Hinglish</button>
+          </div>
+        </div>
+
+        <div class="setting-box">
+          <h3 data-i18n="theme">Theme</h3>
+          <div class="option-row">
+            <button class="option-btn active" id="themeAurora" onclick="setTheme('aurora')">Aurora</button>
+            <button class="option-btn" id="themeOcean" onclick="setTheme('ocean')">Ocean</button>
+            <button class="option-btn" id="themeMint" onclick="setTheme('mint')">Mint</button>
+          </div>
+        </div>
+
+        <div class="setting-box">
+          <div class="switch-row">
+            <div>
+              <h3 style="margin-bottom:4px;" data-i18n="animation">Animation</h3>
+              <p class="app-info" data-i18n="animationInfo">Turn app animations ON/OFF</p>
+            </div>
+
+            <div class="switch" id="animSwitch" onclick="toggleAnimation()">
+              <div class="switch-dot"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="setting-box">
+          <div class="switch-row">
+            <div>
+              <h3 style="margin-bottom:4px;" data-i18n="vibration">Vibration</h3>
+              <p class="app-info" data-i18n="vibrationInfo">Button tap vibration feedback</p>
+            </div>
+
+            <div class="switch" id="vibrationSwitch" onclick="toggleVibration()">
+              <div class="switch-dot"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="setting-box">
+          <div class="switch-row">
+            <div>
+              <h3 style="margin-bottom:4px;" data-i18n="sound">Sound Effects</h3>
+              <p class="app-info" data-i18n="soundInfo">Success sound ON/OFF</p>
+            </div>
+
+            <div class="switch" id="soundSwitch" onclick="toggleSound()">
+              <div class="switch-dot"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="setting-box">
+          <div class="switch-row">
+            <div>
+              <h3 style="margin-bottom:4px;" data-i18n="autoSave">Auto Save</h3>
+              <p class="app-info" data-i18n="autoSaveInfo">Save result automatically after analyze</p>
+            </div>
+
+            <div class="switch" id="autoSaveSwitch" onclick="toggleAutoSave()">
+              <div class="switch-dot"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="setting-box">
+          <div class="switch-row">
+            <div>
+              <h3 style="margin-bottom:4px;" data-i18n="liveUpdate">Live Update</h3>
+              <p class="app-info" data-i18n="liveUpdateInfo">Update seconds in real-time</p>
+            </div>
+
+            <div class="switch" id="liveSwitch" onclick="toggleLiveUpdate()">
+              <div class="switch-dot"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="setting-box">
+          <div class="switch-row">
+            <div>
+              <h3 style="margin-bottom:4px;" data-i18n="compactMode">Compact Mode</h3>
+              <p class="app-info" data-i18n="compactInfo">Smaller cards and spacing</p>
+            </div>
+
+            <div class="switch off" id="compactSwitch" onclick="toggleCompactMode()">
+              <div class="switch-dot"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="setting-box">
+          <h3 data-i18n="lifeProgressAge">Life Progress Age</h3>
+          <div class="option-row">
+            <button class="option-btn active" id="life75" onclick="setLifeBase(75)">75</button>
+            <button class="option-btn" id="life80" onclick="setLifeBase(80)">80</button>
+            <button class="option-btn" id="life90" onclick="setLifeBase(90)">90</button>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+</div>
+
+
+<!-- BOTTOM NAVIGATION -->
+<div class="bottom-nav">
+  <button class="nav-item active" onclick="openPage('homePage', this)">
+    <span>⌂</span><b data-i18n="home">Home</b>
+  </button>
+
+  <button class="nav-item" onclick="openPage('comparePage', this)">
+    <span>⇄</span><b data-i18n="compare">Compare</b>
+  </button>
+
+  <button class="nav-item" onclick="openPage('savedPage', this); renderSavedResults();">
+    <span>◇</span><b data-i18n="saved">Saved</b>
+  </button>
+
+  <button class="nav-item" onclick="openPage('settingsPage', this)">
+    <span>⚙</span><b data-i18n="settings">Settings</b>
+  </button>
+</div>
+
+<div class="toast" id="toast"></div>
+<script>
+let selectedGender = "Male";
+let dobValue = null;
+let liveTimer = null;
+let lastResult = "";
+let lastSaveData = null;
+
+let lifeBaseAge = 75;
+let animationEnabled = true;
+let vibrationEnabled = true;
+let soundEnabled = true;
+let autoSaveEnabled = true;
+let liveUpdateEnabled = true;
+let compactModeEnabled = false;
+let currentLang = "en";
+
+const T = {
+  en:{
+    subtitle:"Smart Age & DOB Analyzer", enterDob:"Enter Date of Birth", day:"Day", month:"Month", year:"Year",
+    gender:"Gender", optional:"(Optional)", male:"Male", female:"Female", other:"Other", analyzeAge:"Analyze Age",
+    analyzing:"Analyzing Your Age...", currentAge:"Your Current Age", lifeProgress:"Life Progress", basedOn:"Based on",
+    years:"Years", copyResult:"Copy Result", compareAges:"Compare Ages", firstDob:"First Date of Birth",
+    secondDob:"Second Date of Birth", compareNow:"Compare Now", savedResults:"Saved Results", clearAllSaved:"Clear All Saved",
+    settings:"Settings", language:"Language", theme:"Theme", animation:"Animation", animationInfo:"Turn app animations ON/OFF",
+    vibration:"Vibration", vibrationInfo:"Button tap vibration feedback", sound:"Sound Effects", soundInfo:"Success sound ON/OFF",
+    autoSave:"Auto Save", autoSaveInfo:"Save result automatically after analyze", liveUpdate:"Live Update",
+    liveUpdateInfo:"Update seconds in real-time", compactMode:"Compact Mode", compactInfo:"Smaller cards and spacing",
+    lifeProgressAge:"Life Progress Age", home:"Home", compare:"Compare", saved:"Saved",
+    totalMonths:"Total Months", totalWeeks:"Total Weeks", totalDays:"Total Days", totalHours:"Total Hours",
+    totalMinutes:"Total Minutes", totalSeconds:"Total Seconds", bornOn:"Born on", zodiacSign:"Zodiac Sign",
+    nextBirthday:"Next Birthday", birthSeason:"Birth Season", completed:"Completed", daysLeft:"Days Left"
+  },
+  as:{
+    subtitle:"স্মাৰ্ট বয়স আৰু DOB বিশ্লেষক", enterDob:"জন্ম তাৰিখ দিয়ক", day:"দিন", month:"মাহ", year:"বছৰ",
+    gender:"লিংগ", optional:"(ঐচ্ছিক)", male:"পুৰুষ", female:"মহিলা", other:"অন্য", analyzeAge:"বয়স বিশ্লেষণ কৰক",
+    analyzing:"আপোনাৰ বয়স বিশ্লেষণ কৰি আছে...", currentAge:"আপোনাৰ বৰ্তমান বয়স", lifeProgress:"জীৱন অগ্ৰগতি", basedOn:"ভিত্তি",
+    years:"বছৰ", copyResult:"ৰিজাল্ট কপি কৰক", compareAges:"বয়স তুলনা কৰক", firstDob:"প্ৰথম জন্ম তাৰিখ",
+    secondDob:"দ্বিতীয় জন্ম তাৰিখ", compareNow:"এতিয়া তুলনা কৰক", savedResults:"সেভ কৰা ৰিজাল্ট", clearAllSaved:"সকলো মচক",
+    settings:"ছেটিংছ", language:"ভাষা", theme:"থীম", animation:"এনিমেচন", animationInfo:"এপ এনিমেচন ON/OFF কৰক",
+    vibration:"ভাইব্ৰেচন", vibrationInfo:"বুটাম টেপত ভাইব্ৰেচন", sound:"চাউণ্ড ইফেক্ট", soundInfo:"সফলতা চাউণ্ড ON/OFF",
+    autoSave:"অটো সেভ", autoSaveInfo:"বিশ্লেষণৰ পিছত নিজে সেভ হ’ব", liveUpdate:"লাইভ আপডেট",
+    liveUpdateInfo:"ছেকেণ্ড বাস্তৱ সময়ত আপডেট", compactMode:"কম্পেক্ট ম’ড", compactInfo:"সৰু কাৰ্ড আৰু কম স্পেচ",
+    lifeProgressAge:"জীৱন অগ্ৰগতি বয়স", home:"হোম", compare:"তুলনা", saved:"সেভ", 
+    totalMonths:"মুঠ মাহ", totalWeeks:"মুঠ সপ্তাহ", totalDays:"মুঠ দিন", totalHours:"মুঠ ঘণ্টা",
+    totalMinutes:"মুঠ মিনিট", totalSeconds:"মুঠ ছেকেণ্ড", bornOn:"জন্মদিন", zodiacSign:"ৰাশি",
+    nextBirthday:"পৰৱৰ্তী জন্মদিন", birthSeason:"জন্ম ঋতু", completed:"সম্পূৰ্ণ", daysLeft:"দিন বাকী"
+  },
+  hi:{
+    subtitle:"Smart Age & DOB Analyzer", enterDob:"जन्म तारीख डालें", day:"दिन", month:"महीना", year:"साल",
+    gender:"लिंग", optional:"(Optional)", male:"पुरुष", female:"महिला", other:"अन्य", analyzeAge:"Age Analyze करें",
+    analyzing:"आपकी उम्र analyze हो रही है...", currentAge:"आपकी वर्तमान उम्र", lifeProgress:"Life Progress", basedOn:"Based on",
+    years:"साल", copyResult:"Result Copy करें", compareAges:"उम्र Compare करें", firstDob:"पहली जन्म तारीख",
+    secondDob:"दूसरी जन्म तारीख", compareNow:"Compare Now", savedResults:"Saved Results", clearAllSaved:"सभी Saved हटाएं",
+    settings:"Settings", language:"Language", theme:"Theme", animation:"Animation", animationInfo:"App animations ON/OFF करें",
+    vibration:"Vibration", vibrationInfo:"Button tap vibration feedback", sound:"Sound Effects", soundInfo:"Success sound ON/OFF",
+    autoSave:"Auto Save", autoSaveInfo:"Analyze के बाद result अपने आप save होगा", liveUpdate:"Live Update",
+    liveUpdateInfo:"Seconds real-time update होगा", compactMode:"Compact Mode", compactInfo:"छोटे cards और spacing",
+    lifeProgressAge:"Life Progress Age", home:"Home", compare:"Compare", saved:"Saved",
+    totalMonths:"Total Months", totalWeeks:"Total Weeks", totalDays:"Total Days", totalHours:"Total Hours",
+    totalMinutes:"Total Minutes", totalSeconds:"Total Seconds", bornOn:"Born on", zodiacSign:"Zodiac Sign",
+    nextBirthday:"Next Birthday", birthSeason:"Birth Season", completed:"Completed", daysLeft:"Days Left"
+  },
+  hg:{
+    subtitle:"Smart Age & DOB Analyzer", enterDob:"Date of Birth Dalo", day:"Day", month:"Month", year:"Year",
+    gender:"Gender", optional:"(Optional)", male:"Male", female:"Female", other:"Other", analyzeAge:"Age Analyze Karo",
+    analyzing:"Age analyze ho raha hai...", currentAge:"Tumhara Current Age", lifeProgress:"Life Progress", basedOn:"Based on",
+    years:"Years", copyResult:"Result Copy Karo", compareAges:"Age Compare Karo", firstDob:"First DOB",
+    secondDob:"Second DOB", compareNow:"Compare Karo", savedResults:"Saved Results", clearAllSaved:"Sab Saved Clear Karo",
+    settings:"Settings", language:"Language", theme:"Theme", animation:"Animation", animationInfo:"Animation ON/OFF karo",
+    vibration:"Vibration", vibrationInfo:"Button tap pe vibration", sound:"Sound Effects", soundInfo:"Success sound ON/OFF",
+    autoSave:"Auto Save", autoSaveInfo:"Analyze ke baad auto save hoga", liveUpdate:"Live Update",
+    liveUpdateInfo:"Seconds live update hoga", compactMode:"Compact Mode", compactInfo:"Cards chote aur compact",
+    lifeProgressAge:"Life Progress Age", home:"Home", compare:"Compare", saved:"Saved",
+    totalMonths:"Total Months", totalWeeks:"Total Weeks", totalDays:"Total Days", totalHours:"Total Hours",
+    totalMinutes:"Total Minutes", totalSeconds:"Total Seconds", bornOn:"Born on", zodiacSign:"Zodiac Sign",
+    nextBirthday:"Next Birthday", birthSeason:"Birth Season", completed:"Completed", daysLeft:"Days Left"
+  }
+};
+
+const monthNames = [
+  "1 - January","2 - February","3 - March","4 - April",
+  "5 - May","6 - June","7 - July","8 - August",
+  "9 - September","10 - October","11 - November","12 - December"
+];
+
+function fillDropdowns(dayId, monthId, yearId){
+  const d = document.getElementById(dayId);
+  const m = document.getElementById(monthId);
+  const y = document.getElementById(yearId);
+
+  d.innerHTML = "<option value=''></option>";
+  for(let i=1;i<=31;i++) d.innerHTML += `<option value="${i}">${i}</option>`;
+
+  m.innerHTML = "<option value=''></option>";
+  monthNames.forEach((name,index)=>{
+    m.innerHTML += `<option value="${index+1}">${name}</option>`;
+  });
+
+  y.innerHTML = "<option value=''></option>";
+  const currentYear = new Date().getFullYear();
+  for(let yr=currentYear; yr>=1900; yr--){
+    y.innerHTML += `<option value="${yr}">${yr}</option>`;
+  }
+}
+
+fillDropdowns("day","month","year");
+fillDropdowns("c1day","c1month","c1year");
+fillDropdowns("c2day","c2month","c2year");
+
+window.onload = function(){
+  loadSettings();
+  renderSavedResults();
+  applyLanguage(currentLang);
+};
+
+function tr(key){
+  return T[currentLang][key] || T.en[key] || key;
+}
+
+function applyLanguage(lang){
+  currentLang = lang;
+  document.querySelectorAll("[data-i18n]").forEach(el=>{
+    const key = el.getAttribute("data-i18n");
+    el.innerText = tr(key);
+  });
+
+  document.querySelectorAll("#langEn,#langAs,#langHi,#langHg").forEach(b=>b.classList.remove("active"));
+  if(lang === "en") document.getElementById("langEn").classList.add("active");
+  if(lang === "as") document.getElementById("langAs").classList.add("active");
+  if(lang === "hi") document.getElementById("langHi").classList.add("active");
+  if(lang === "hg") document.getElementById("langHg").classList.add("active");
+
+  localStorage.setItem("agexpert_lang", lang);
+
+  if(dobValue) updateResult(false);
+  renderSavedResults();
+}
+
+function setLanguage(lang){
+  tapFeedback();
+  applyLanguage(lang);
+  showToast("Language Updated");
+}
+
+function tapFeedback(){
+  if(vibrationEnabled && navigator.vibrate) navigator.vibrate(18);
+}
+
+function playSound(){
+  if(!soundEnabled) return;
+  try{
+    const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    const oscillator = audioCtx.createOscillator();
+    const gainNode = audioCtx.createGain();
+    oscillator.connect(gainNode);
+    gainNode.connect(audioCtx.destination);
+    oscillator.frequency.value = 660;
+    oscillator.type = "sine";
+    gainNode.gain.setValueAtTime(0.06, audioCtx.currentTime);
+    gainNode.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.18);
+    oscillator.start(audioCtx.currentTime);
+    oscillator.stop(audioCtx.currentTime + 0.18);
+  }catch(e){}
+}
+
+function openPage(pageId, btn){
+  tapFeedback();
+  document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));
+  document.getElementById(pageId).classList.add("active");
+  document.querySelectorAll(".nav-item").forEach(n=>n.classList.remove("active"));
+  btn.classList.add("active");
+}
+
+function selectGender(el, gender){
+  tapFeedback();
+  document.querySelectorAll(".gender-box").forEach(g=>g.classList.remove("active"));
+  el.classList.add("active");
+  selectedGender = gender;
+}
+
+function makeDate(dayId, monthId, yearId){
+  const d = parseInt(document.getElementById(dayId).value);
+  const m = parseInt(document.getElementById(monthId).value);
+  const y = parseInt(document.getElementById(yearId).value);
+  if(!d || !m || !y) return null;
+  const date = new Date(y, m - 1, d);
+  if(date.getDate() !== d || date.getMonth() !== m - 1 || date.getFullYear() !== y) return "invalid";
+  return date;
+}
+
+function calculateAge(){
+  tapFeedback();
+  const date = makeDate("day","month","year");
+
+  if(date === null){ showToast("Please select full date of birth"); return; }
+  if(date === "invalid"){ showToast("Invalid date selected"); return; }
+  if(date > new Date()){ showToast("DOB cannot be future date"); return; }
+
+  dobValue = date;
+  document.getElementById("resultBox").style.display = "none";
+  document.getElementById("loadingBox").style.display = "block";
+
+  setTimeout(()=>{
+    document.getElementById("loadingBox").style.display = "none";
+    document.getElementById("resultBox").style.display = "block";
+
+    if(liveTimer) clearInterval(liveTimer);
+    updateResult(true);
+
+    if(liveUpdateEnabled){
+      liveTimer = setInterval(()=>updateResult(false),1000);
+    }
+
+    if(autoSaveEnabled){
+      setTimeout(()=>autoSaveResult(),300);
+    }
+
+    playSound();
+  },900);
+}
+
+function updateResult(withTyping){
+  const now = new Date();
+
+  let years = now.getFullYear() - dobValue.getFullYear();
+  let months = now.getMonth() - dobValue.getMonth();
+  let days = now.getDate() - dobValue.getDate();
+
+  if(days < 0){
+    months--;
+    days += new Date(now.getFullYear(), now.getMonth(), 0).getDate();
+  }
+
+  if(months < 0){
+    years--;
+    months += 12;
+  }
+
+  const diffMs = now - dobValue;
+  const totalSeconds = Math.floor(diffMs / 1000);
+  const totalMinutes = Math.floor(totalSeconds / 60);
+  const totalHours = Math.floor(totalMinutes / 60);
+  const totalDays = Math.floor(totalHours / 24);
+  const totalWeeks = Math.floor(totalDays / 7);
+  const totalMonths = years * 12 + months;
+
+  const bornDay = dobValue.toLocaleDateString("en-US", { weekday:"long" });
+  const zodiac = getZodiac(dobValue.getDate(), dobValue.getMonth()+1);
+  const nextBirthday = getNextBirthday(now, dobValue);
+  const season = getSeason(dobValue.getMonth()+1);
+  const lifePercent = Math.min((years / lifeBaseAge) * 100, 100).toFixed(1);
+
+  document.getElementById("mainAge").innerText = years + " " + tr("years");
+  document.getElementById("subAge").innerText = months + " Months " + days + " Days";
+
+  const typingClass = withTyping && animationEnabled ? "typing" : "";
+
+  document.getElementById("lineResults").innerHTML = `
+    ${line(tr("totalMonths"), totalMonths.toLocaleString() + " Months", 0, typingClass)}
+    ${line(tr("totalWeeks"), totalWeeks.toLocaleString() + " Weeks", 1, typingClass)}
+    ${line(tr("totalDays"), totalDays.toLocaleString() + " Days", 2, typingClass)}
+    ${line(tr("totalHours"), totalHours.toLocaleString() + " Hours", 3, typingClass)}
+    ${line(tr("totalMinutes"), totalMinutes.toLocaleString() + " Minutes", 4, typingClass)}
+    ${line(tr("totalSeconds"), totalSeconds.toLocaleString() + " Seconds", 5, typingClass)}
+    ${line(tr("bornOn"), bornDay, 6, typingClass)}
+    ${line(tr("zodiacSign"), zodiac, 7, typingClass)}
+    ${line(tr("nextBirthday"), nextBirthday + " " + tr("daysLeft"), 8, typingClass + " birthday-pop")}
+    ${line(tr("birthSeason"), season, 9, typingClass)}
+  `;
+
+  document.getElementById("lifeBaseText").innerText = lifeBaseAge;
+  document.getElementById("lifePercent").innerText = lifePercent + "% " + tr("completed");
+  document.getElementById("lifeBar").style.width = lifePercent + "%";
+  document.getElementById("lifeText").innerText =
+    "You have completed " + lifePercent + "% of your expected life journey.";
+
+  lastResult =
+`AgeXpert Result
+
+Gender: ${selectedGender}
+Current Age: ${years} Years, ${months} Months, ${days} Days
+Total Months: ${totalMonths}
+Total Weeks: ${totalWeeks}
+Total Days: ${totalDays}
+Total Hours: ${totalHours}
+Total Minutes: ${totalMinutes}
+Total Seconds: ${totalSeconds}
+Born on: ${bornDay}
+Zodiac Sign: ${zodiac}
+Next Birthday: ${nextBirthday} Days Left
+Birth Season: ${season}
+Life Progress: ${lifePercent}% Completed
+Life Progress Base: ${lifeBaseAge} Years`;
+
+  lastSaveData = {
+    id: Date.now(),
+    dobKey: dobValue.getFullYear()+"-"+(dobValue.getMonth()+1)+"-"+dobValue.getDate(),
+    gender:selectedGender,
+    age:`${years} Years, ${months} Months, ${days} Days`,
+    bornDay, zodiac,
+    nextBirthday: nextBirthday + " Days Left",
+    season,
+    savedAt:new Date().toLocaleString()
+  };
+}
+
+function line(label, value, delay, className){
+  return `
+    <div class="info-line ${className}" style="animation-delay:${delay * 0.07}s">
+      <div class="info-left">${label}</div>
+      <div class="info-value">${value}</div>
+    </div>
+  `;
+}
+
+function autoSaveResult(){
+  if(!lastSaveData) return;
+  let saved = JSON.parse(localStorage.getItem("agexpert_saved") || "[]");
+  const exists = saved.some(item => item.dobKey === lastSaveData.dobKey && item.gender === lastSaveData.gender);
+  if(!exists){
+    saved.unshift(lastSaveData);
+    localStorage.setItem("agexpert_saved", JSON.stringify(saved));
+    renderSavedResults();
+  }
+}
+
+function renderSavedResults(){
+  const box = document.getElementById("savedList");
+  if(!box) return;
+  let saved = JSON.parse(localStorage.getItem("agexpert_saved") || "[]");
+
+  if(saved.length === 0){
+    box.innerHTML = `<p class="app-info">No saved results yet. Analyze an age and it will save automatically.</p>`;
+    return;
+  }
+
+  box.innerHTML = saved.map(item=>`
+    <div class="saved-item">
+      <h3>${item.age}</h3>
+      <p>
+        Gender: ${item.gender}<br>
+        Born on: ${item.bornDay}<br>
+        Zodiac: ${item.zodiac}<br>
+        Next Birthday: ${item.nextBirthday}<br>
+        Birth Season: ${item.season}<br>
+        Saved: ${item.savedAt}
+      </p>
+      <button class="delete-btn" onclick="deleteSavedResult(${item.id})">Delete</button>
+    </div>
+  `).join("");
+}
+
+function deleteSavedResult(id){
+  tapFeedback();
+  let saved = JSON.parse(localStorage.getItem("agexpert_saved") || "[]");
+  saved = saved.filter(item=>item.id !== id);
+  localStorage.setItem("agexpert_saved", JSON.stringify(saved));
+  renderSavedResults();
+  showToast("Deleted");
+}
+
+function clearSavedResults(){
+  tapFeedback();
+  localStorage.removeItem("agexpert_saved");
+  renderSavedResults();
+  showToast("Saved History Cleared");
+}
+
+function compareAges(){
+  tapFeedback();
+  const date1 = makeDate("c1day","c1month","c1year");
+  const date2 = makeDate("c2day","c2month","c2year");
+
+  if(date1 === null || date2 === null){ showToast("Please select both full DOB"); return; }
+  if(date1 === "invalid" || date2 === "invalid"){ showToast("Invalid date selected"); return; }
+  if(date1 > new Date() || date2 > new Date()){ showToast("Future DOB not allowed"); return; }
+
+  let olderText = date1 < date2 ? "First person is older" : date2 < date1 ? "Second person is older" : "Both are same age";
+  const gapDays = Math.abs(Math.floor((date1 - date2) / (1000*60*60*24)));
+  const gapYears = Math.floor(gapDays / 365);
+  const remainingDays = gapDays % 365;
+
+  document.getElementById("compareResult").innerHTML = `
+    <div class="card">
+      <div class="info-line"><div class="info-left">Result</div><div class="info-value">${olderText}</div></div>
+      <div class="info-line"><div class="info-left">Age Gap</div><div class="info-value">${gapYears} Years ${remainingDays} Days</div></div>
+      <div class="info-line"><div class="info-left">Total Gap Days</div><div class="info-value">${gapDays.toLocaleString()} Days</div></div>
+    </div>
+  `;
+  playSound();
+}
+
+function resetApp(){
+  tapFeedback();
+  document.getElementById("day").value = "";
+  document.getElementById("month").value = "";
+  document.getElementById("year").value = "";
+  document.querySelectorAll(".gender-box").forEach(g=>g.classList.remove("active"));
+  document.querySelector(".gender-box").classList.add("active");
+  selectedGender = "Male";
+  dobValue = null;
+  lastResult = "";
+  lastSaveData = null;
+  if(liveTimer) clearInterval(liveTimer);
+  document.getElementById("loadingBox").style.display = "none";
+  document.getElementById("resultBox").style.display = "none";
+  document.getElementById("lifeBar").style.width = "0%";
+  showToast("Refreshed Successfully");
+}
+
+function setTheme(theme){
+  tapFeedback();
+
+  if(theme === "aurora"){
+    document.documentElement.style.setProperty("--primary","#7c3aed");
+    document.documentElement.style.setProperty("--primary2","#ff4d8d");
+    document.documentElement.style.setProperty("--accent","#ff9f43");
+    document.documentElement.style.setProperty("--softBg","#fff7fb");
+    document.documentElement.style.setProperty("--softBg2","#f7f1ff");
+  }
+  if(theme === "ocean"){
+    document.documentElement.style.setProperty("--primary","#0284c7");
+    document.documentElement.style.setProperty("--primary2","#06b6d4");
+    document.documentElement.style.setProperty("--accent","#22c55e");
+    document.documentElement.style.setProperty("--softBg","#f0faff");
+    document.documentElement.style.setProperty("--softBg2","#ecfeff");
+  }
+  if(theme === "mint"){
+    document.documentElement.style.setProperty("--primary","#059669");
+    document.documentElement.style.setProperty("--primary2","#10b981");
+    document.documentElement.style.setProperty("--accent","#84cc16");
+    document.documentElement.style.setProperty("--softBg","#f0fdf4");
+    document.documentElement.style.setProperty("--softBg2","#ecfdf5");
+  }
+
+  document.querySelectorAll("#themeAurora,#themeOcean,#themeMint").forEach(btn=>btn.classList.remove("active"));
+  if(theme === "aurora") document.getElementById("themeAurora").classList.add("active");
+  if(theme === "ocean") document.getElementById("themeOcean").classList.add("active");
+  if(theme === "mint") document.getElementById("themeMint").classList.add("active");
+
+  localStorage.setItem("agexpert_theme", theme);
+}
+
+function toggleAnimation(){
+  tapFeedback();
+  animationEnabled = !animationEnabled;
+  document.getElementById("animSwitch").classList.toggle("off", !animationEnabled);
+  document.body.classList.toggle("no-anim", !animationEnabled);
+  localStorage.setItem("agexpert_animation", animationEnabled ? "on" : "off");
+}
+
+function toggleVibration(){
+  vibrationEnabled = !vibrationEnabled;
+  document.getElementById("vibrationSwitch").classList.toggle("off", !vibrationEnabled);
+  localStorage.setItem("agexpert_vibration", vibrationEnabled ? "on" : "off");
+}
+
+function toggleSound(){
+  tapFeedback();
+  soundEnabled = !soundEnabled;
+  document.getElementById("soundSwitch").classList.toggle("off", !soundEnabled);
+  localStorage.setItem("agexpert_sound", soundEnabled ? "on" : "off");
+  if(soundEnabled) playSound();
+}
+
+function toggleAutoSave(){
+  tapFeedback();
+  autoSaveEnabled = !autoSaveEnabled;
+  document.getElementById("autoSaveSwitch").classList.toggle("off", !autoSaveEnabled);
+  localStorage.setItem("agexpert_autosave", autoSaveEnabled ? "on" : "off");
+}
+
+function toggleLiveUpdate(){
+  tapFeedback();
+  liveUpdateEnabled = !liveUpdateEnabled;
+  document.getElementById("liveSwitch").classList.toggle("off", !liveUpdateEnabled);
+
+  if(liveUpdateEnabled && dobValue){
+    if(liveTimer) clearInterval(liveTimer);
+    liveTimer = setInterval(()=>updateResult(false),1000);
+  }else{
+    if(liveTimer) clearInterval(liveTimer);
+  }
+
+  localStorage.setItem("agexpert_live", liveUpdateEnabled ? "on" : "off");
+}
+
+function toggleCompactMode(){
+  tapFeedback();
+  compactModeEnabled = !compactModeEnabled;
+  document.getElementById("compactSwitch").classList.toggle("off", !compactModeEnabled);
+  document.body.classList.toggle("compact", compactModeEnabled);
+  localStorage.setItem("agexpert_compact", compactModeEnabled ? "on" : "off");
+}
+
+function setLifeBase(age){
+  tapFeedback();
+  lifeBaseAge = age;
+  document.querySelectorAll("#life75,#life80,#life90").forEach(btn=>btn.classList.remove("active"));
+  document.getElementById("life"+age).classList.add("active");
+  document.getElementById("lifeBaseText").innerText = age;
+  localStorage.setItem("agexpert_life_base", age);
+  if(dobValue) updateResult(false);
+}
+
+function loadSettings(){
+  currentLang = localStorage.getItem("agexpert_lang") || "en";
+  setTheme(localStorage.getItem("agexpert_theme") || "aurora");
+
+  animationEnabled = (localStorage.getItem("agexpert_animation") || "on") === "on";
+  vibrationEnabled = (localStorage.getItem("agexpert_vibration") || "on") === "on";
+  soundEnabled = (localStorage.getItem("agexpert_sound") || "on") === "on";
+  autoSaveEnabled = (localStorage.getItem("agexpert_autosave") || "on") === "on";
+  liveUpdateEnabled = (localStorage.getItem("agexpert_live") || "on") === "on";
+  compactModeEnabled = (localStorage.getItem("agexpert_compact") || "off") === "on";
+  lifeBaseAge = parseInt(localStorage.getItem("agexpert_life_base") || "75");
+
+  document.getElementById("animSwitch").classList.toggle("off", !animationEnabled);
+  document.getElementById("vibrationSwitch").classList.toggle("off", !vibrationEnabled);
+  document.getElementById("soundSwitch").classList.toggle("off", !soundEnabled);
+  document.getElementById("autoSaveSwitch").classList.toggle("off", !autoSaveEnabled);
+  document.getElementById("liveSwitch").classList.toggle("off", !liveUpdateEnabled);
+  document.getElementById("compactSwitch").classList.toggle("off", !compactModeEnabled);
+
+  document.body.classList.toggle("no-anim", !animationEnabled);
+  document.body.classList.toggle("compact", compactModeEnabled);
+
+  document.querySelectorAll("#life75,#life80,#life90").forEach(btn=>btn.classList.remove("active"));
+  if(document.getElementById("life"+lifeBaseAge)){
+    document.getElementById("life"+lifeBaseAge).classList.add("active");
+  }
+  document.getElementById("lifeBaseText").innerText = lifeBaseAge;
+}
+
+function getNextBirthday(today, dob){
+  let next = new Date(today.getFullYear(), dob.getMonth(), dob.getDate());
+  if(next < today) next.setFullYear(today.getFullYear()+1);
+  return Math.ceil((next - today) / (1000*60*60*24));
+}
+
+function getSeason(month){
+  if(month === 12 || month === 1 || month === 2) return "Winter";
+  if(month >= 3 && month <= 5) return "Spring";
+  if(month >= 6 && month <= 8) return "Summer";
+  return "Autumn";
+}
+
+function getZodiac(day, month){
+  if((month==3 && day>=21)||(month==4 && day<=19)) return "Aries";
+  if((month==4 && day>=20)||(month==5 && day<=20)) return "Taurus";
+  if((month==5 && day>=21)||(month==6 && day<=20)) return "Gemini";
+  if((month==6 && day>=21)||(month==7 && day<=22)) return "Cancer";
+  if((month==7 && day>=23)||(month==8 && day<=22)) return "Leo";
+  if((month==8 && day>=23)||(month==9 && day<=22)) return "Virgo";
+  if((month==9 && day>=23)||(month==10 && day<=22)) return "Libra";
+  if((month==10 && day>=23)||(month==11 && day<=21)) return "Scorpio";
+  if((month==11 && day>=22)||(month==12 && day<=21)) return "Sagittarius";
+  if((month==12 && day>=22)||(month==1 && day<=19)) return "Capricorn";
+  if((month==1 && day>=20)||(month==2 && day<=18)) return "Aquarius";
+  return "Pisces";
+}
+
+function copyResult(){
+  tapFeedback();
+
+  if(!lastResult){
+    showToast("Please calculate first");
+    return;
+  }
+
+  if(navigator.clipboard && window.isSecureContext){
+    navigator.clipboard.writeText(lastResult).then(()=>{
+      showToast("Copied Successfully");
+      playSound();
+    }).catch(()=>fallbackCopy(lastResult));
+  }else{
+    fallbackCopy(lastResult);
+  }
+}
+
+function fallbackCopy(text){
+  const textarea = document.createElement("textarea");
+  textarea.value = text;
+  textarea.style.position = "fixed";
+  textarea.style.left = "-9999px";
+  document.body.appendChild(textarea);
+  textarea.focus();
+  textarea.select();
+
+  try{
+    document.execCommand("copy");
+    showToast("Copied Successfully");
+    playSound();
+  }catch(e){
+    showToast("Copy not supported");
+  }
+
+  document.body.removeChild(textarea);
+}
+
+function showToast(msg){
+  const toast = document.getElementById("toast");
+  toast.innerText = msg;
+  toast.style.display = "block";
+  setTimeout(()=>toast.style.display = "none",1800);
+}
+</script>
+
+</body>
+</html>
