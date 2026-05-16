@@ -34,6 +34,16 @@ body{
   background:linear-gradient(135deg,var(--softBg),var(--softBg2));
 }
 
+body.dark{
+  --text:#f8fafc;
+  --muted:#cbd5e1;
+  --border:rgba(255,255,255,.12);
+  --glass:rgba(15,23,42,.82);
+  --softBg:#020617;
+  --softBg2:#111827;
+  background:linear-gradient(135deg,#020617,#111827);
+}
+
 body.no-anim *,
 body.no-anim *::before,
 body.no-anim *::after{
@@ -124,6 +134,10 @@ body.compact .content{
   border-bottom-right-radius:26px;
 }
 
+body.dark .sticky-header{
+  background:rgba(2,6,23,.92);
+}
+
 .header-pill{
   min-height:62px;
   border:1.8px solid var(--border);
@@ -133,6 +147,10 @@ body.compact .content{
   justify-content:center;
   background:linear-gradient(135deg,rgba(255,255,255,.95),rgba(255,240,248,.94));
   box-shadow:0 0 26px rgba(255,77,141,.18);
+}
+
+body.dark .header-pill{
+  background:linear-gradient(135deg,rgba(15,23,42,.95),rgba(17,24,39,.95));
 }
 
 .title-box{
@@ -146,6 +164,10 @@ body.compact .content{
   line-height:1;
 }
 
+body.dark .title-box h1{
+  color:#fff;
+}
+
 .title-box h1 span{
   background:linear-gradient(135deg,var(--primary),var(--primary2));
   -webkit-background-clip:text;
@@ -157,6 +179,10 @@ body.compact .content{
   color:#5e6472;
   font-size:12px;
   font-weight:800;
+}
+
+body.dark .title-box p{
+  color:#cbd5e1;
 }
 
 .title-box p::before,
@@ -182,6 +208,11 @@ body.compact .content{
 .page.active{
   display:block;
   animation:fadeUp .35s ease;
+}
+
+@keyframes fadeUp{
+  from{opacity:0;transform:translateY(14px);}
+  to{opacity:1;transform:translateY(0);}
 }
 
 .card{
@@ -225,6 +256,10 @@ body.compact .content{
   flex-shrink:0;
 }
 
+body.dark .icon{
+  background:rgba(255,255,255,.08);
+}
+
 .refresh-btn{
   width:39px;
   height:39px;
@@ -237,6 +272,10 @@ body.compact .content{
   cursor:pointer;
 }
 
+body.dark .refresh-btn{
+  background:#111827;
+  color:#fff;
+}
 .dob-row{
   display:grid;
   grid-template-columns:1fr 1fr 1fr;
@@ -256,11 +295,19 @@ body.compact .content{
   box-shadow:0 8px 18px rgba(124,58,237,.07);
 }
 
+body.dark .select-box{
+  background:rgba(15,23,42,.92);
+}
+
 .select-title{
   color:#6d6175;
   font-size:11px;
   font-weight:900;
   margin-bottom:3px;
+}
+
+body.dark .select-title{
+  color:#cbd5e1;
 }
 
 select{
@@ -272,6 +319,10 @@ select{
   font-size:16px;
   font-weight:900;
   height:26px;
+}
+
+body.dark select{
+  color:#fff;
 }
 
 .gender-row,
@@ -303,6 +354,12 @@ select{
   transition:.22s ease;
 }
 
+body.dark .gender-box,
+body.dark .option-btn{
+  background:#111827;
+  color:#fff;
+}
+
 .gender-box.active,
 .option-btn.active{
   background:linear-gradient(135deg,var(--primary),var(--primary2));
@@ -325,6 +382,7 @@ button:active,
 
 .main-btn,
 .copy-btn,
+.save-btn,
 .clear-btn{
   position:relative;
   overflow:hidden;
@@ -332,6 +390,7 @@ button:active,
 
 .main-btn::after,
 .copy-btn::after,
+.save-btn::after,
 .clear-btn::after{
   content:"";
   position:absolute;
@@ -373,6 +432,10 @@ button:active,
   box-shadow:0 12px 30px rgba(124,58,237,.12);
 }
 
+body.dark .loading-box{
+  background:#111827;
+}
+
 .loader{
   width:44px;
   height:44px;
@@ -391,14 +454,9 @@ button:active,
   font-weight:900;
   color:var(--primary);
 }
+
 .result{
   display:none;
-  animation:fadeUp .35s ease;
-}
-
-@keyframes fadeUp{
-  from{opacity:0;transform:translateY(14px);}
-  to{opacity:1;transform:translateY(0);}
 }
 
 .age-main{
@@ -415,14 +473,18 @@ button:active,
   text-align:center;
 }
 
-.age-main .icon{
-  margin-bottom:8px;
+body.dark .age-main{
+  background:linear-gradient(135deg,#111827,#1e293b);
 }
 
 .age-main small{
   font-size:14px;
   color:#574a63;
   font-weight:800;
+}
+
+body.dark .age-main small{
+  color:#cbd5e1;
 }
 
 .age-main h2{
@@ -439,6 +501,10 @@ button:active,
   color:#2b2d3a;
 }
 
+body.dark .age-main p{
+  color:#fff;
+}
+
 .info-line{
   border:1.8px solid rgba(124,58,237,.22);
   border-radius:17px;
@@ -452,27 +518,8 @@ button:active,
   box-shadow:0 8px 20px rgba(124,58,237,.07);
 }
 
-.info-line.typing{
-  opacity:0;
-  transform:translateY(10px);
-  animation:typeLine .45s forwards;
-}
-
-@keyframes typeLine{
-  to{
-    opacity:1;
-    transform:translateY(0);
-  }
-}
-
-.birthday-pop{
-  animation:birthdayPulse 1.4s infinite;
-}
-
-@keyframes birthdayPulse{
-  0%{transform:scale(1);}
-  50%{transform:scale(1.015);}
-  100%{transform:scale(1);}
+body.dark .info-line{
+  background:#111827;
 }
 
 .info-left{
@@ -481,13 +528,16 @@ button:active,
   font-weight:900;
 }
 
+body.dark .info-left{
+  color:#fff;
+}
+
 .info-value{
   color:var(--primary);
   font-size:16px;
   font-weight:900;
   text-align:right;
 }
-
 .progress-card{
   border:1.8px solid rgba(124,58,237,.28);
   border-radius:24px;
@@ -498,6 +548,10 @@ button:active,
   box-shadow:0 10px 24px rgba(124,58,237,.09);
 }
 
+body.dark .progress-card{
+  background:#111827;
+}
+
 .progress-top{
   display:flex;
   align-items:center;
@@ -506,6 +560,10 @@ button:active,
   font-weight:900;
   color:#2b2d3a;
   gap:8px;
+}
+
+body.dark .progress-top{
+  color:#fff;
 }
 
 .life-title{
@@ -527,6 +585,10 @@ button:active,
   overflow:hidden;
 }
 
+body.dark .progress{
+  background:#374151;
+}
+
 .bar{
   width:0%;
   height:100%;
@@ -543,17 +605,30 @@ button:active,
   font-weight:700;
 }
 
-.copy-btn{
+body.dark .progress-card p{
+  color:#cbd5e1;
+}
+
+.copy-btn,
+.save-btn{
   width:100%;
   padding:17px;
   border-radius:18px;
   font-size:17px;
   font-weight:900;
   border:none;
-  background:linear-gradient(135deg,var(--primary),var(--primary2));
   color:#fff;
-  box-shadow:0 14px 28px rgba(255,77,141,.25);
   margin-bottom:12px;
+}
+
+.copy-btn{
+  background:linear-gradient(135deg,var(--primary),var(--primary2));
+  box-shadow:0 14px 28px rgba(255,77,141,.25);
+}
+
+.save-btn{
+  background:linear-gradient(135deg,#06b6d4,#2563eb);
+  box-shadow:0 14px 28px rgba(37,99,235,.25);
 }
 
 .section-title{
@@ -564,12 +639,21 @@ button:active,
 }
 
 .saved-item{
+  position:relative;
   border:1.8px solid rgba(124,58,237,.22);
   border-radius:18px;
   padding:14px;
   margin-bottom:12px;
   background:rgba(255,255,255,.88);
   box-shadow:0 8px 20px rgba(124,58,237,.07);
+}
+
+body.dark .saved-item{
+  background:#111827;
+}
+
+.saved-item.selected{
+  border:2px solid #22c55e;
 }
 
 .saved-item h3{
@@ -585,31 +669,181 @@ button:active,
   line-height:1.7;
 }
 
-.delete-btn{
-  width:100%;
-  margin-top:10px;
-  padding:12px;
+body.dark .saved-item p{
+  color:#fff;
+}
+
+.saved-top{
+  display:flex;
+  align-items:flex-start;
+  justify-content:space-between;
+  gap:10px;
+}
+
+.menu-btn{
+  width:34px;
+  height:34px;
   border:none;
-  border-radius:14px;
-  background:rgba(255,77,141,.12);
-  color:var(--primary2);
+  border-radius:12px;
+  background:#f3f4f6;
+  color:#111827;
+  font-size:18px;
+  font-weight:900;
+}
+
+body.dark .menu-btn{
+  background:#1f2937;
+  color:#fff;
+}
+
+.popup-menu{
+  position:absolute;
+  top:54px;
+  right:12px;
+  background:#fff;
+  border-radius:16px;
+  padding:8px;
+  min-width:120px;
+  border:1px solid rgba(124,58,237,.15);
+  box-shadow:0 14px 30px rgba(0,0,0,.15);
+  display:none;
+  z-index:20;
+}
+
+body.dark .popup-menu{
+  background:#111827;
+}
+
+.popup-menu button{
+  width:100%;
+  border:none;
+  background:transparent;
+  padding:12px;
+  border-radius:12px;
   font-size:14px;
   font-weight:900;
+  text-align:left;
+  color:#ef4444;
 }
 
-.clear-btn{
-  width:100%;
-  padding:15px;
+.selection-bar{
+  display:none;
+  position:sticky;
+  top:88px;
+  z-index:40;
+  margin-bottom:12px;
+  padding:12px;
+  border-radius:18px;
+  background:linear-gradient(135deg,var(--primary),var(--primary2));
+  color:#fff;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+}
+
+.selection-actions{
+  display:flex;
+  gap:8px;
+}
+
+.selection-actions button{
   border:none;
-  border-radius:17px;
-  background:linear-gradient(135deg,#ff4d8d,#ff6b6b);
-  color:white;
-  font-size:17px;
+  border-radius:12px;
+  padding:10px 14px;
+  font-size:13px;
   font-weight:900;
-  box-shadow:0 14px 28px rgba(255,77,141,.20);
-  margin-top:10px;
+  background:#fff;
+  color:#111827;
 }
 
+.overlay{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.45);
+  backdrop-filter:blur(10px);
+  display:none;
+  align-items:center;
+  justify-content:center;
+  z-index:200;
+  padding:20px;
+}
+
+.popup-box{
+  width:100%;
+  max-width:360px;
+  border-radius:28px;
+  padding:22px;
+  background:rgba(255,255,255,.95);
+  box-shadow:0 30px 60px rgba(0,0,0,.25);
+  animation:fadeUp .25s ease;
+}
+
+body.dark .popup-box{
+  background:#0f172a;
+}
+
+.popup-box h2{
+  font-size:24px;
+  margin-bottom:10px;
+  color:#111827;
+}
+
+body.dark .popup-box h2{
+  color:#fff;
+}
+
+.popup-box p{
+  font-size:14px;
+  color:#6b7280;
+  margin-bottom:18px;
+  line-height:1.7;
+}
+
+body.dark .popup-box p{
+  color:#cbd5e1;
+}
+
+.popup-input{
+  width:100%;
+  height:56px;
+  border:none;
+  outline:none;
+  border-radius:18px;
+  padding:0 16px;
+  font-size:16px;
+  font-weight:800;
+  background:#f3f4f6;
+  margin-bottom:18px;
+}
+
+body.dark .popup-input{
+  background:#1e293b;
+  color:#fff;
+}
+
+.popup-actions{
+  display:flex;
+  gap:10px;
+}
+
+.popup-actions button{
+  flex:1;
+  border:none;
+  height:52px;
+  border-radius:16px;
+  font-size:15px;
+  font-weight:900;
+}
+
+.cancel-btn{
+  background:#e5e7eb;
+  color:#111827;
+}
+
+.confirm-btn{
+  background:linear-gradient(135deg,var(--primary),var(--primary2));
+  color:#fff;
+}
 .setting-box{
   border:1.8px solid rgba(124,58,237,.22);
   border-radius:18px;
@@ -619,10 +853,18 @@ button:active,
   box-shadow:0 8px 20px rgba(124,58,237,.07);
 }
 
+body.dark .setting-box{
+  background:#111827;
+}
+
 .setting-box h3{
   font-size:16px;
   color:#2b2d3a;
   margin-bottom:10px;
+}
+
+body.dark .setting-box h3{
+  color:#fff;
 }
 
 .switch-row{
@@ -665,6 +907,10 @@ button:active,
   line-height:1.8;
 }
 
+body.dark .app-info{
+  color:#cbd5e1;
+}
+
 .bottom-nav{
   position:fixed;
   left:50%;
@@ -682,12 +928,20 @@ button:active,
   z-index:60;
 }
 
+body.dark .bottom-nav{
+  background:rgba(15,23,42,.92);
+}
+
 .nav-item{
   border:none;
   background:transparent;
   color:#6d7280;
   font-size:12px;
   font-weight:900;
+}
+
+body.dark .nav-item{
+  color:#cbd5e1;
 }
 
 .nav-item span{
@@ -712,8 +966,10 @@ button:active,
   font-size:14px;
   font-weight:700;
   display:none;
-  z-index:100;
+  z-index:300;
+  box-shadow:0 18px 40px rgba(0,0,0,.28);
 }
+
 </style>
 </head>
 
@@ -722,6 +978,26 @@ button:active,
 <div class="bg-blob blob1"></div>
 <div class="bg-blob blob2"></div>
 <div class="bg-blob blob3"></div>
+
+<div class="overlay" id="saveOverlay">
+  <div class="popup-box">
+    <h2>Save Result</h2>
+    <p>Enter a name for this saved result.</p>
+
+    <input
+      type="text"
+      id="saveNameInput"
+      class="popup-input"
+      placeholder="Enter Name"
+      maxlength="30"
+    >
+
+    <div class="popup-actions">
+      <button class="cancel-btn" onclick="closeSavePopup()">Cancel</button>
+      <button class="confirm-btn" onclick="confirmSaveResult()">Save</button>
+    </div>
+  </div>
+</div>
 
 <div class="app">
 
@@ -736,7 +1012,6 @@ button:active,
 
   <div class="content">
 
-    <!-- HOME PAGE -->
     <div class="page active" id="homePage">
 
       <div class="card">
@@ -768,7 +1043,10 @@ button:active,
         <div class="label-row">
           <div class="label-left">
             <div class="icon">👤</div>
-            <span><span data-i18n="gender">Gender</span> <small style="color:#6d7280;" data-i18n="optional">(Optional)</small></span>
+            <span>
+              <span data-i18n="gender">Gender</span>
+              <small style="color:#6d7280;" data-i18n="optional">(Optional)</small>
+            </span>
           </div>
         </div>
 
@@ -778,15 +1056,16 @@ button:active,
           <div class="gender-box" onclick="selectGender(this,'Other')" data-i18n="other">Other</div>
         </div>
 
-        <button class="main-btn" onclick="calculateAge()" data-i18n="analyzeAge">Analyze Age</button>
+        <button class="main-btn" onclick="calculateAge()" data-i18n="analyzeAge">
+          Analyze Age
+        </button>
       </div>
 
       <div class="loading-box" id="loadingBox">
         <div class="loader"></div>
         <p data-i18n="analyzing">Analyzing Your Age...</p>
       </div>
-
-      <div class="result" id="resultBox">
+<div class="result" id="resultBox">
 
         <div class="age-main">
           <small data-i18n="currentAge">Your Current Age</small>
@@ -800,7 +1079,14 @@ button:active,
           <div class="progress-top">
             <div class="life-title">
               <div class="icon">♡</div>
-              <span><span data-i18n="lifeProgress">Life Progress</span> <small style="color:#6d7280;">(<span data-i18n="basedOn">Based on</span> <b id="lifeBaseText">75</b> <span data-i18n="years">Years</span>)</small></span>
+              <span>
+                <span data-i18n="lifeProgress">Life Progress</span>
+                <small style="color:#6d7280;">
+                  (<span data-i18n="basedOn">Based on</span>
+                  <b id="lifeBaseText">75</b>
+                  <span data-i18n="years">Years</span>)
+                </small>
+              </span>
             </div>
             <span id="lifePercent">0%</span>
           </div>
@@ -812,22 +1098,32 @@ button:active,
           <p id="lifeText">You have completed 0% of your expected life journey.</p>
         </div>
 
-        <button class="copy-btn" onclick="copyResult()" data-i18n="copyResult">Copy Result</button>
+        <button class="copy-btn" onclick="copyResult()" data-i18n="copyResult">
+          Copy Result
+        </button>
+
+        <button class="save-btn" onclick="openSavePopup()">
+          Save Result
+        </button>
 
       </div>
     </div>
-<!-- COMPARE PAGE -->
+
+
+    <!-- COMPARE PAGE -->
     <div class="page" id="comparePage">
 
       <div class="card">
-        <div class="label-row">
-          <div class="label-left">
-            <div class="icon">⚖️</div>
-            <span data-i18n="compareAges">Compare Ages</span>
-          </div>
-        </div>
+   <div class="label-row">
+  <div class="label-left">
+    <div class="icon">⚖️</div>
+    <span data-i18n="compareAges">Compare Ages</span>
+  </div>
 
+  <button class="refresh-btn" onclick="resetComparePage()">↻</button>
+</div>
         <div class="section-title" data-i18n="firstDob">First Date of Birth</div>
+
         <div class="dob-row">
           <div class="select-box">
             <div class="select-title" data-i18n="day">Day</div>
@@ -846,6 +1142,7 @@ button:active,
         </div>
 
         <div class="section-title" data-i18n="secondDob">Second Date of Birth</div>
+
         <div class="dob-row">
           <div class="select-box">
             <div class="select-title" data-i18n="day">Day</div>
@@ -863,7 +1160,9 @@ button:active,
           </div>
         </div>
 
-        <button class="main-btn" onclick="compareAges()" data-i18n="compareNow">Compare Now</button>
+        <button class="main-btn" onclick="compareAges()" data-i18n="compareNow">
+          Compare Now
+        </button>
       </div>
 
       <div id="compareResult"></div>
@@ -882,9 +1181,16 @@ button:active,
           </div>
         </div>
 
-        <div id="savedList"></div>
+        <div class="selection-bar" id="selectionBar">
+          <span id="selectedCount">0 Selected</span>
 
-        <button class="clear-btn" onclick="clearSavedResults()" data-i18n="clearAllSaved">Clear All Saved</button>
+          <div class="selection-actions">
+            <button onclick="selectAllSaved()">Select All</button>
+            <button onclick="deleteSelectedSaved()">Delete</button>
+          </div>
+        </div>
+
+        <div id="savedList"></div>
       </div>
 
     </div>
@@ -894,6 +1200,7 @@ button:active,
     <div class="page" id="settingsPage">
 
       <div class="card">
+
         <div class="label-row">
           <div class="label-left">
             <div class="icon">⚙️</div>
@@ -904,19 +1211,27 @@ button:active,
         <div class="setting-box">
           <h3 data-i18n="language">Language</h3>
           <div class="lang-row">
-            <button class="option-btn active" id="langEn" onclick="setLanguage('en')">English</button>
-            <button class="option-btn" id="langAs" onclick="setLanguage('as')">অসমীয়া</button>
-            <button class="option-btn" id="langHi" onclick="setLanguage('hi')">हिन्दी</button>
-            <button class="option-btn" id="langHg" onclick="setLanguage('hg')">Hinglish</button>
+            <button class="option-btn active" id="langEn" onclick="setLanguage('en')">
+              English
+            </button>
+            <button class="option-btn" id="langHg" onclick="setLanguage('hg')">
+              Hinglish
+            </button>
           </div>
         </div>
 
         <div class="setting-box">
           <h3 data-i18n="theme">Theme</h3>
           <div class="option-row">
-            <button class="option-btn active" id="themeAurora" onclick="setTheme('aurora')">Aurora</button>
-            <button class="option-btn" id="themeOcean" onclick="setTheme('ocean')">Ocean</button>
-            <button class="option-btn" id="themeMint" onclick="setTheme('mint')">Mint</button>
+            <button class="option-btn active" id="themeAurora" onclick="setTheme('aurora')">
+              Aurora
+            </button>
+            <button class="option-btn" id="themeOcean" onclick="setTheme('ocean')">
+              Ocean
+            </button>
+            <button class="option-btn" id="themeMint" onclick="setTheme('mint')">
+              Mint
+            </button>
           </div>
         </div>
 
@@ -945,12 +1260,16 @@ button:active,
             </div>
           </div>
         </div>
-
-        <div class="setting-box">
+<div class="setting-box">
           <div class="switch-row">
             <div>
-              <h3 style="margin-bottom:4px;" data-i18n="sound">Sound Effects</h3>
-              <p class="app-info" data-i18n="soundInfo">Success sound ON/OFF</p>
+              <h3 style="margin-bottom:4px;" data-i18n="sound">
+                Sound Effects
+              </h3>
+
+              <p class="app-info" data-i18n="soundInfo">
+                Success sound ON/OFF
+              </p>
             </div>
 
             <div class="switch" id="soundSwitch" onclick="toggleSound()">
@@ -962,11 +1281,16 @@ button:active,
         <div class="setting-box">
           <div class="switch-row">
             <div>
-              <h3 style="margin-bottom:4px;" data-i18n="autoSave">Auto Save</h3>
-              <p class="app-info" data-i18n="autoSaveInfo">Save result automatically after analyze</p>
+              <h3 style="margin-bottom:4px;">
+                Voice Result
+              </h3>
+
+              <p class="app-info">
+                Speak age result automatically
+              </p>
             </div>
 
-            <div class="switch" id="autoSaveSwitch" onclick="toggleAutoSave()">
+            <div class="switch" id="voiceSwitch" onclick="toggleVoice()">
               <div class="switch-dot"></div>
             </div>
           </div>
@@ -975,8 +1299,31 @@ button:active,
         <div class="setting-box">
           <div class="switch-row">
             <div>
-              <h3 style="margin-bottom:4px;" data-i18n="liveUpdate">Live Update</h3>
-              <p class="app-info" data-i18n="liveUpdateInfo">Update seconds in real-time</p>
+              <h3 style="margin-bottom:4px;">
+                Dark Mode
+              </h3>
+
+              <p class="app-info">
+                Full dark premium theme
+              </p>
+            </div>
+
+            <div class="switch off" id="darkSwitch" onclick="toggleDarkMode()">
+              <div class="switch-dot"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="setting-box">
+          <div class="switch-row">
+            <div>
+              <h3 style="margin-bottom:4px;" data-i18n="liveUpdate">
+                Live Update
+              </h3>
+
+              <p class="app-info" data-i18n="liveUpdateInfo">
+                Update seconds in real-time
+              </p>
             </div>
 
             <div class="switch" id="liveSwitch" onclick="toggleLiveUpdate()">
@@ -988,8 +1335,13 @@ button:active,
         <div class="setting-box">
           <div class="switch-row">
             <div>
-              <h3 style="margin-bottom:4px;" data-i18n="compactMode">Compact Mode</h3>
-              <p class="app-info" data-i18n="compactInfo">Smaller cards and spacing</p>
+              <h3 style="margin-bottom:4px;" data-i18n="compactMode">
+                Compact Mode
+              </h3>
+
+              <p class="app-info" data-i18n="compactInfo">
+                Smaller cards and spacing
+              </p>
             </div>
 
             <div class="switch off" id="compactSwitch" onclick="toggleCompactMode()">
@@ -999,16 +1351,26 @@ button:active,
         </div>
 
         <div class="setting-box">
-          <h3 data-i18n="lifeProgressAge">Life Progress Age</h3>
+          <h3 data-i18n="lifeProgressAge">
+            Life Progress Age
+          </h3>
+
           <div class="option-row">
-            <button class="option-btn active" id="life75" onclick="setLifeBase(75)">75</button>
-            <button class="option-btn" id="life80" onclick="setLifeBase(80)">80</button>
-            <button class="option-btn" id="life90" onclick="setLifeBase(90)">90</button>
+            <button class="option-btn active" id="life75" onclick="setLifeBase(75)">
+              75
+            </button>
+
+            <button class="option-btn" id="life80" onclick="setLifeBase(80)">
+              80
+            </button>
+
+            <button class="option-btn" id="life90" onclick="setLifeBase(90)">
+              90
+            </button>
           </div>
         </div>
 
       </div>
-
     </div>
 
   </div>
@@ -1017,124 +1379,221 @@ button:active,
 
 <!-- BOTTOM NAVIGATION -->
 <div class="bottom-nav">
+
   <button class="nav-item active" onclick="openPage('homePage', this)">
-    <span>⌂</span><b data-i18n="home">Home</b>
+    <span>⌂</span>
+    <b data-i18n="home">Home</b>
   </button>
 
   <button class="nav-item" onclick="openPage('comparePage', this)">
-    <span>⇄</span><b data-i18n="compare">Compare</b>
+    <span>⇄</span>
+    <b data-i18n="compare">Compare</b>
   </button>
 
   <button class="nav-item" onclick="openPage('savedPage', this); renderSavedResults();">
-    <span>◇</span><b data-i18n="saved">Saved</b>
+    <span>◇</span>
+    <b data-i18n="saved">Saved</b>
   </button>
 
   <button class="nav-item" onclick="openPage('settingsPage', this)">
-    <span>⚙</span><b data-i18n="settings">Settings</b>
+    <span>⚙</span>
+    <b data-i18n="settings">Settings</b>
   </button>
+
 </div>
 
 <div class="toast" id="toast"></div>
+
 <script>
+
 let selectedGender = "Male";
 let dobValue = null;
 let liveTimer = null;
 let lastResult = "";
 let lastSaveData = null;
 
+let selectedSaved = [];
+
 let lifeBaseAge = 75;
 let animationEnabled = true;
 let vibrationEnabled = true;
 let soundEnabled = true;
-let autoSaveEnabled = true;
+let voiceEnabled = true;
+let darkModeEnabled = false;
 let liveUpdateEnabled = true;
 let compactModeEnabled = false;
 let currentLang = "en";
 
 const T = {
   en:{
-    subtitle:"Smart Age & DOB Analyzer", enterDob:"Enter Date of Birth", day:"Day", month:"Month", year:"Year",
-    gender:"Gender", optional:"(Optional)", male:"Male", female:"Female", other:"Other", analyzeAge:"Analyze Age",
-    analyzing:"Analyzing Your Age...", currentAge:"Your Current Age", lifeProgress:"Life Progress", basedOn:"Based on",
-    years:"Years", copyResult:"Copy Result", compareAges:"Compare Ages", firstDob:"First Date of Birth",
-    secondDob:"Second Date of Birth", compareNow:"Compare Now", savedResults:"Saved Results", clearAllSaved:"Clear All Saved",
-    settings:"Settings", language:"Language", theme:"Theme", animation:"Animation", animationInfo:"Turn app animations ON/OFF",
-    vibration:"Vibration", vibrationInfo:"Button tap vibration feedback", sound:"Sound Effects", soundInfo:"Success sound ON/OFF",
-    autoSave:"Auto Save", autoSaveInfo:"Save result automatically after analyze", liveUpdate:"Live Update",
-    liveUpdateInfo:"Update seconds in real-time", compactMode:"Compact Mode", compactInfo:"Smaller cards and spacing",
-    lifeProgressAge:"Life Progress Age", home:"Home", compare:"Compare", saved:"Saved",
-    totalMonths:"Total Months", totalWeeks:"Total Weeks", totalDays:"Total Days", totalHours:"Total Hours",
-    totalMinutes:"Total Minutes", totalSeconds:"Total Seconds", bornOn:"Born on", zodiacSign:"Zodiac Sign",
-    nextBirthday:"Next Birthday", birthSeason:"Birth Season", completed:"Completed", daysLeft:"Days Left"
+    subtitle:"Smart Age & DOB Analyzer",
+    enterDob:"Enter Date of Birth",
+    day:"Day",
+    month:"Month",
+    year:"Year",
+    gender:"Gender",
+    optional:"(Optional)",
+    male:"Male",
+    female:"Female",
+    other:"Other",
+    analyzeAge:"Analyze Age",
+    analyzing:"Analyzing Your Age...",
+    currentAge:"Your Current Age",
+    lifeProgress:"Life Progress",
+    basedOn:"Based on",
+    years:"Years",
+    copyResult:"Copy Result",
+    compareAges:"Compare Ages",
+    firstDob:"First Date of Birth",
+    secondDob:"Second Date of Birth",
+    compareNow:"Compare Now",
+    savedResults:"Saved Results",
+    settings:"Settings",
+    language:"Language",
+    theme:"Theme",
+    animation:"Animation",
+    animationInfo:"Turn app animations ON/OFF",
+    vibration:"Vibration",
+    vibrationInfo:"Button tap vibration feedback",
+    sound:"Sound Effects",
+    soundInfo:"Success sound ON/OFF",
+    liveUpdate:"Live Update",
+    liveUpdateInfo:"Update seconds in real-time",
+    compactMode:"Compact Mode",
+    compactInfo:"Smaller cards and spacing",
+    lifeProgressAge:"Life Progress Age",
+    home:"Home",
+    compare:"Compare",
+    saved:"Saved",
+    totalMonths:"Total Months",
+    totalWeeks:"Total Weeks",
+    totalDays:"Total Days",
+    totalHours:"Total Hours",
+    totalMinutes:"Total Minutes",
+    totalSeconds:"Total Seconds",
+    bornOn:"Born on",
+    zodiacSign:"Zodiac Sign",
+    nextBirthday:"Next Birthday",
+    birthSeason:"Birth Season",
+    completed:"Completed",
+    daysLeft:"Days Left",
+    luckyNumber:"Lucky Number"
   },
-  as:{
-    subtitle:"স্মাৰ্ট বয়স আৰু DOB বিশ্লেষক", enterDob:"জন্ম তাৰিখ দিয়ক", day:"দিন", month:"মাহ", year:"বছৰ",
-    gender:"লিংগ", optional:"(ঐচ্ছিক)", male:"পুৰুষ", female:"মহিলা", other:"অন্য", analyzeAge:"বয়স বিশ্লেষণ কৰক",
-    analyzing:"আপোনাৰ বয়স বিশ্লেষণ কৰি আছে...", currentAge:"আপোনাৰ বৰ্তমান বয়স", lifeProgress:"জীৱন অগ্ৰগতি", basedOn:"ভিত্তি",
-    years:"বছৰ", copyResult:"ৰিজাল্ট কপি কৰক", compareAges:"বয়স তুলনা কৰক", firstDob:"প্ৰথম জন্ম তাৰিখ",
-    secondDob:"দ্বিতীয় জন্ম তাৰিখ", compareNow:"এতিয়া তুলনা কৰক", savedResults:"সেভ কৰা ৰিজাল্ট", clearAllSaved:"সকলো মচক",
-    settings:"ছেটিংছ", language:"ভাষা", theme:"থীম", animation:"এনিমেচন", animationInfo:"এপ এনিমেচন ON/OFF কৰক",
-    vibration:"ভাইব্ৰেচন", vibrationInfo:"বুটাম টেপত ভাইব্ৰেচন", sound:"চাউণ্ড ইফেক্ট", soundInfo:"সফলতা চাউণ্ড ON/OFF",
-    autoSave:"অটো সেভ", autoSaveInfo:"বিশ্লেষণৰ পিছত নিজে সেভ হ’ব", liveUpdate:"লাইভ আপডেট",
-    liveUpdateInfo:"ছেকেণ্ড বাস্তৱ সময়ত আপডেট", compactMode:"কম্পেক্ট ম’ড", compactInfo:"সৰু কাৰ্ড আৰু কম স্পেচ",
-    lifeProgressAge:"জীৱন অগ্ৰগতি বয়স", home:"হোম", compare:"তুলনা", saved:"সেভ", 
-    totalMonths:"মুঠ মাহ", totalWeeks:"মুঠ সপ্তাহ", totalDays:"মুঠ দিন", totalHours:"মুঠ ঘণ্টা",
-    totalMinutes:"মুঠ মিনিট", totalSeconds:"মুঠ ছেকেণ্ড", bornOn:"জন্মদিন", zodiacSign:"ৰাশি",
-    nextBirthday:"পৰৱৰ্তী জন্মদিন", birthSeason:"জন্ম ঋতু", completed:"সম্পূৰ্ণ", daysLeft:"দিন বাকী"
-  },
-  hi:{
-    subtitle:"Smart Age & DOB Analyzer", enterDob:"जन्म तारीख डालें", day:"दिन", month:"महीना", year:"साल",
-    gender:"लिंग", optional:"(Optional)", male:"पुरुष", female:"महिला", other:"अन्य", analyzeAge:"Age Analyze करें",
-    analyzing:"आपकी उम्र analyze हो रही है...", currentAge:"आपकी वर्तमान उम्र", lifeProgress:"Life Progress", basedOn:"Based on",
-    years:"साल", copyResult:"Result Copy करें", compareAges:"उम्र Compare करें", firstDob:"पहली जन्म तारीख",
-    secondDob:"दूसरी जन्म तारीख", compareNow:"Compare Now", savedResults:"Saved Results", clearAllSaved:"सभी Saved हटाएं",
-    settings:"Settings", language:"Language", theme:"Theme", animation:"Animation", animationInfo:"App animations ON/OFF करें",
-    vibration:"Vibration", vibrationInfo:"Button tap vibration feedback", sound:"Sound Effects", soundInfo:"Success sound ON/OFF",
-    autoSave:"Auto Save", autoSaveInfo:"Analyze के बाद result अपने आप save होगा", liveUpdate:"Live Update",
-    liveUpdateInfo:"Seconds real-time update होगा", compactMode:"Compact Mode", compactInfo:"छोटे cards और spacing",
-    lifeProgressAge:"Life Progress Age", home:"Home", compare:"Compare", saved:"Saved",
-    totalMonths:"Total Months", totalWeeks:"Total Weeks", totalDays:"Total Days", totalHours:"Total Hours",
-    totalMinutes:"Total Minutes", totalSeconds:"Total Seconds", bornOn:"Born on", zodiacSign:"Zodiac Sign",
-    nextBirthday:"Next Birthday", birthSeason:"Birth Season", completed:"Completed", daysLeft:"Days Left"
-  },
+
   hg:{
-    subtitle:"Smart Age & DOB Analyzer", enterDob:"Date of Birth Dalo", day:"Day", month:"Month", year:"Year",
-    gender:"Gender", optional:"(Optional)", male:"Male", female:"Female", other:"Other", analyzeAge:"Age Analyze Karo",
-    analyzing:"Age analyze ho raha hai...", currentAge:"Tumhara Current Age", lifeProgress:"Life Progress", basedOn:"Based on",
-    years:"Years", copyResult:"Result Copy Karo", compareAges:"Age Compare Karo", firstDob:"First DOB",
-    secondDob:"Second DOB", compareNow:"Compare Karo", savedResults:"Saved Results", clearAllSaved:"Sab Saved Clear Karo",
-    settings:"Settings", language:"Language", theme:"Theme", animation:"Animation", animationInfo:"Animation ON/OFF karo",
-    vibration:"Vibration", vibrationInfo:"Button tap pe vibration", sound:"Sound Effects", soundInfo:"Success sound ON/OFF",
-    autoSave:"Auto Save", autoSaveInfo:"Analyze ke baad auto save hoga", liveUpdate:"Live Update",
-    liveUpdateInfo:"Seconds live update hoga", compactMode:"Compact Mode", compactInfo:"Cards chote aur compact",
-    lifeProgressAge:"Life Progress Age", home:"Home", compare:"Compare", saved:"Saved",
-    totalMonths:"Total Months", totalWeeks:"Total Weeks", totalDays:"Total Days", totalHours:"Total Hours",
-    totalMinutes:"Total Minutes", totalSeconds:"Total Seconds", bornOn:"Born on", zodiacSign:"Zodiac Sign",
-    nextBirthday:"Next Birthday", birthSeason:"Birth Season", completed:"Completed", daysLeft:"Days Left"
+    subtitle:"Smart Age & DOB Analyzer",
+    enterDob:"Date of Birth Dalo",
+    day:"Day",
+    month:"Month",
+    year:"Year",
+    gender:"Gender",
+    optional:"(Optional)",
+    male:"Male",
+    female:"Female",
+    other:"Other",
+    analyzeAge:"Age Analyze Karo",
+    analyzing:"Age analyze ho raha hai...",
+    currentAge:"Tumhara Current Age",
+    lifeProgress:"Life Progress",
+    basedOn:"Based on",
+    years:"Years",
+    copyResult:"Result Copy Karo",
+    compareAges:"Age Compare Karo",
+    firstDob:"First DOB",
+    secondDob:"Second DOB",
+    compareNow:"Compare Karo",
+    savedResults:"Saved Results",
+    settings:"Settings",
+    language:"Language",
+    theme:"Theme",
+    animation:"Animation",
+    animationInfo:"Animation ON/OFF karo",
+    vibration:"Vibration",
+    vibrationInfo:"Button tap pe vibration",
+    sound:"Sound Effects",
+    soundInfo:"Success sound ON/OFF",
+    liveUpdate:"Live Update",
+    liveUpdateInfo:"Seconds live update hoga",
+    compactMode:"Compact Mode",
+    compactInfo:"Cards chote aur compact",
+    lifeProgressAge:"Life Progress Age",
+    home:"Home",
+    compare:"Compare",
+    saved:"Saved",
+    totalMonths:"Total Months",
+    totalWeeks:"Total Weeks",
+    totalDays:"Total Days",
+    totalHours:"Total Hours",
+    totalMinutes:"Total Minutes",
+    totalSeconds:"Total Seconds",
+    bornOn:"Born on",
+    zodiacSign:"Zodiac Sign",
+    nextBirthday:"Next Birthday",
+    birthSeason:"Birth Season",
+    completed:"Completed",
+    daysLeft:"Days Left",
+    luckyNumber:"Lucky Number"
   }
+};
+const zodiacAssamese = {
+  Aries:"মেষ",
+  Taurus:"বৃষ",
+  Gemini:"মিথুন",
+  Cancer:"কৰ্কট",
+  Leo:"সিংহ",
+  Virgo:"কন্যা",
+  Libra:"তুলা",
+  Scorpio:"বৃশ্চিক",
+  Sagittarius:"ধনু",
+  Capricorn:"মকৰ",
+  Aquarius:"কুম্ভ",
+  Pisces:"মীন"
+};
+
+const seasonAssamese = {
+  Winter:"শীত",
+  Spring:"বসন্ত",
+  Summer:"গ্ৰীষ্ম",
+  Autumn:"শৰৎ"
 };
 
 const monthNames = [
-  "1 - January","2 - February","3 - March","4 - April",
-  "5 - May","6 - June","7 - July","8 - August",
-  "9 - September","10 - October","11 - November","12 - December"
+  "1 - January",
+  "2 - February",
+  "3 - March",
+  "4 - April",
+  "5 - May",
+  "6 - June",
+  "7 - July",
+  "8 - August",
+  "9 - September",
+  "10 - October",
+  "11 - November",
+  "12 - December"
 ];
 
 function fillDropdowns(dayId, monthId, yearId){
+
   const d = document.getElementById(dayId);
   const m = document.getElementById(monthId);
   const y = document.getElementById(yearId);
 
   d.innerHTML = "<option value=''></option>";
-  for(let i=1;i<=31;i++) d.innerHTML += `<option value="${i}">${i}</option>`;
+
+  for(let i=1;i<=31;i++){
+    d.innerHTML += `<option value="${i}">${i}</option>`;
+  }
 
   m.innerHTML = "<option value=''></option>";
+
   monthNames.forEach((name,index)=>{
     m.innerHTML += `<option value="${index+1}">${name}</option>`;
   });
 
   y.innerHTML = "<option value=''></option>";
+
   const currentYear = new Date().getFullYear();
+
   for(let yr=currentYear; yr>=1900; yr--){
     y.innerHTML += `<option value="${yr}">${yr}</option>`;
   }
@@ -1145,8 +1604,11 @@ fillDropdowns("c1day","c1month","c1year");
 fillDropdowns("c2day","c2month","c2year");
 
 window.onload = function(){
+
   loadSettings();
+
   renderSavedResults();
+
   applyLanguage(currentLang);
 };
 
@@ -1155,108 +1617,248 @@ function tr(key){
 }
 
 function applyLanguage(lang){
+
   currentLang = lang;
+
   document.querySelectorAll("[data-i18n]").forEach(el=>{
+
     const key = el.getAttribute("data-i18n");
+
     el.innerText = tr(key);
   });
 
-  document.querySelectorAll("#langEn,#langAs,#langHi,#langHg").forEach(b=>b.classList.remove("active"));
-  if(lang === "en") document.getElementById("langEn").classList.add("active");
-  if(lang === "as") document.getElementById("langAs").classList.add("active");
-  if(lang === "hi") document.getElementById("langHi").classList.add("active");
-  if(lang === "hg") document.getElementById("langHg").classList.add("active");
+  document.querySelectorAll("#langEn,#langHg").forEach(btn=>{
+    btn.classList.remove("active");
+  });
+
+  if(lang === "en"){
+    document.getElementById("langEn").classList.add("active");
+  }
+
+  if(lang === "hg"){
+    document.getElementById("langHg").classList.add("active");
+  }
 
   localStorage.setItem("agexpert_lang", lang);
 
-  if(dobValue) updateResult(false);
+  if(dobValue){
+    updateResult(false);
+  }
+
   renderSavedResults();
 }
 
 function setLanguage(lang){
+
   tapFeedback();
+
   applyLanguage(lang);
+
   showToast("Language Updated");
 }
 
 function tapFeedback(){
-  if(vibrationEnabled && navigator.vibrate) navigator.vibrate(18);
+
+  if(vibrationEnabled && navigator.vibrate){
+
+    navigator.vibrate(18);
+  }
 }
 
 function playSound(){
+
   if(!soundEnabled) return;
+
   try{
+
     const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+
     const oscillator = audioCtx.createOscillator();
+
     const gainNode = audioCtx.createGain();
+
     oscillator.connect(gainNode);
+
     gainNode.connect(audioCtx.destination);
+
     oscillator.frequency.value = 660;
+
     oscillator.type = "sine";
+
     gainNode.gain.setValueAtTime(0.06, audioCtx.currentTime);
-    gainNode.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.18);
+
+    gainNode.gain.exponentialRampToValueAtTime(
+      0.001,
+      audioCtx.currentTime + 0.18
+    );
+
     oscillator.start(audioCtx.currentTime);
+
     oscillator.stop(audioCtx.currentTime + 0.18);
+
+  }catch(e){}
+}
+
+function speakResult(text){
+
+  if(!voiceEnabled) return;
+
+  try{
+
+    speechSynthesis.cancel();
+
+    const speech = new SpeechSynthesisUtterance(text);
+
+    speech.lang = "en-US";
+
+    speech.rate = 0.92;
+
+    speech.pitch = 1;
+
+    speech.volume = 1;
+
+    speechSynthesis.speak(speech);
+
   }catch(e){}
 }
 
 function openPage(pageId, btn){
+
   tapFeedback();
-  document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));
+
+  document.querySelectorAll(".page").forEach(page=>{
+    page.classList.remove("active");
+  });
+
   document.getElementById(pageId).classList.add("active");
-  document.querySelectorAll(".nav-item").forEach(n=>n.classList.remove("active"));
+
+  document.querySelectorAll(".nav-item").forEach(nav=>{
+    nav.classList.remove("active");
+  });
+
   btn.classList.add("active");
 }
 
 function selectGender(el, gender){
+
   tapFeedback();
-  document.querySelectorAll(".gender-box").forEach(g=>g.classList.remove("active"));
+
+  document.querySelectorAll(".gender-box").forEach(g=>{
+    g.classList.remove("active");
+  });
+
   el.classList.add("active");
+
   selectedGender = gender;
 }
 
 function makeDate(dayId, monthId, yearId){
+
   const d = parseInt(document.getElementById(dayId).value);
+
   const m = parseInt(document.getElementById(monthId).value);
+
   const y = parseInt(document.getElementById(yearId).value);
-  if(!d || !m || !y) return null;
+
+  if(!d || !m || !y){
+    return null;
+  }
+
   const date = new Date(y, m - 1, d);
-  if(date.getDate() !== d || date.getMonth() !== m - 1 || date.getFullYear() !== y) return "invalid";
+
+  if(
+    date.getDate() !== d ||
+    date.getMonth() !== m - 1 ||
+    date.getFullYear() !== y
+  ){
+    return "invalid";
+  }
+
   return date;
 }
 
+function calculateLuckyNumber(day, month, year){
+
+  let total =
+    day.toString() +
+    month.toString() +
+    year.toString();
+
+  total = total
+    .split("")
+    .reduce((a,b)=>a + parseInt(b),0);
+
+  while(total > 9){
+
+    total = total
+      .toString()
+      .split("")
+      .reduce((a,b)=>a + parseInt(b),0);
+  }
+
+  return total;
+}
+
 function calculateAge(){
+
   tapFeedback();
+
   const date = makeDate("day","month","year");
 
-  if(date === null){ showToast("Please select full date of birth"); return; }
-  if(date === "invalid"){ showToast("Invalid date selected"); return; }
-  if(date > new Date()){ showToast("DOB cannot be future date"); return; }
+  if(date === null){
+
+    showToast("Please select full date of birth");
+
+    return;
+  }
+
+  if(date === "invalid"){
+
+    showToast("Invalid date selected");
+
+    return;
+  }
+
+  if(date > new Date()){
+
+    showToast("DOB cannot be future date");
+
+    return;
+  }
 
   dobValue = date;
+
   document.getElementById("resultBox").style.display = "none";
+
   document.getElementById("loadingBox").style.display = "block";
 
   setTimeout(()=>{
+
     document.getElementById("loadingBox").style.display = "none";
+
     document.getElementById("resultBox").style.display = "block";
 
-    if(liveTimer) clearInterval(liveTimer);
+    if(liveTimer){
+      clearInterval(liveTimer);
+    }
+
     updateResult(true);
 
     if(liveUpdateEnabled){
-      liveTimer = setInterval(()=>updateResult(false),1000);
-    }
 
-    if(autoSaveEnabled){
-      setTimeout(()=>autoSaveResult(),300);
+      liveTimer = setInterval(()=>{
+
+        updateResult(false);
+
+      },1000);
     }
 
     playSound();
+
   },900);
 }
-
 function updateResult(withTyping){
+
   const now = new Date();
 
   let years = now.getFullYear() - dobValue.getFullYear();
@@ -1282,32 +1884,50 @@ function updateResult(withTyping){
   const totalMonths = years * 12 + months;
 
   const bornDay = dobValue.toLocaleDateString("en-US", { weekday:"long" });
+
   const zodiac = getZodiac(dobValue.getDate(), dobValue.getMonth()+1);
+  const zodiacAs = zodiacAssamese[zodiac];
+
   const nextBirthday = getNextBirthday(now, dobValue);
+
   const season = getSeason(dobValue.getMonth()+1);
+  const seasonAs = seasonAssamese[season];
+
+  const luckyNumber = calculateLuckyNumber(
+    dobValue.getDate(),
+    dobValue.getMonth()+1,
+    dobValue.getFullYear()
+  );
+
   const lifePercent = Math.min((years / lifeBaseAge) * 100, 100).toFixed(1);
 
-  document.getElementById("mainAge").innerText = years + " " + tr("years");
-  document.getElementById("subAge").innerText = months + " Months " + days + " Days";
+  document.getElementById("mainAge").innerText =
+    years + " " + tr("years");
 
-  const typingClass = withTyping && animationEnabled ? "typing" : "";
+  document.getElementById("subAge").innerText =
+    months + " Months " + days + " Days";
 
   document.getElementById("lineResults").innerHTML = `
-    ${line(tr("totalMonths"), totalMonths.toLocaleString() + " Months", 0, typingClass)}
-    ${line(tr("totalWeeks"), totalWeeks.toLocaleString() + " Weeks", 1, typingClass)}
-    ${line(tr("totalDays"), totalDays.toLocaleString() + " Days", 2, typingClass)}
-    ${line(tr("totalHours"), totalHours.toLocaleString() + " Hours", 3, typingClass)}
-    ${line(tr("totalMinutes"), totalMinutes.toLocaleString() + " Minutes", 4, typingClass)}
-    ${line(tr("totalSeconds"), totalSeconds.toLocaleString() + " Seconds", 5, typingClass)}
-    ${line(tr("bornOn"), bornDay, 6, typingClass)}
-    ${line(tr("zodiacSign"), zodiac, 7, typingClass)}
-    ${line(tr("nextBirthday"), nextBirthday + " " + tr("daysLeft"), 8, typingClass + " birthday-pop")}
-    ${line(tr("birthSeason"), season, 9, typingClass)}
+    ${line(tr("totalMonths"), totalMonths.toLocaleString() + " Months")}
+    ${line(tr("totalWeeks"), totalWeeks.toLocaleString() + " Weeks")}
+    ${line(tr("totalDays"), totalDays.toLocaleString() + " Days")}
+    ${line(tr("totalHours"), totalHours.toLocaleString() + " Hours")}
+    ${line(tr("totalMinutes"), totalMinutes.toLocaleString() + " Minutes")}
+    ${line(tr("totalSeconds"), totalSeconds.toLocaleString() + " Seconds")}
+    ${line(tr("bornOn"), bornDay)}
+    ${line(tr("zodiacSign"), zodiac + " (" + zodiacAs + ")")}
+    ${line(tr("nextBirthday"), nextBirthday + " " + tr("daysLeft"))}
+    ${line(tr("birthSeason"), season + " (" + seasonAs + ")")}
+    ${line(tr("luckyNumber"), luckyNumber)}
   `;
 
   document.getElementById("lifeBaseText").innerText = lifeBaseAge;
-  document.getElementById("lifePercent").innerText = lifePercent + "% " + tr("completed");
-  document.getElementById("lifeBar").style.width = lifePercent + "%";
+  document.getElementById("lifePercent").innerText =
+    lifePercent + "% " + tr("completed");
+
+  document.getElementById("lifeBar").style.width =
+    lifePercent + "%";
+
   document.getElementById("lifeText").innerText =
     "You have completed " + lifePercent + "% of your expected life journey.";
 
@@ -1323,129 +1943,345 @@ Total Hours: ${totalHours}
 Total Minutes: ${totalMinutes}
 Total Seconds: ${totalSeconds}
 Born on: ${bornDay}
-Zodiac Sign: ${zodiac}
+Zodiac Sign: ${zodiac} (${zodiacAs})
 Next Birthday: ${nextBirthday} Days Left
-Birth Season: ${season}
+Birth Season: ${season} (${seasonAs})
+Lucky Number: ${luckyNumber}
 Life Progress: ${lifePercent}% Completed
 Life Progress Base: ${lifeBaseAge} Years`;
 
   lastSaveData = {
     id: Date.now(),
-    dobKey: dobValue.getFullYear()+"-"+(dobValue.getMonth()+1)+"-"+dobValue.getDate(),
     gender:selectedGender,
     age:`${years} Years, ${months} Months, ${days} Days`,
-    bornDay, zodiac,
+    bornDay:bornDay,
+    zodiac:zodiac + " (" + zodiacAs + ")",
     nextBirthday: nextBirthday + " Days Left",
-    season,
+    season: season + " (" + seasonAs + ")",
+    luckyNumber:luckyNumber,
     savedAt:new Date().toLocaleString()
   };
+
+  if(withTyping){
+    const voiceText =
+      currentLang === "hg"
+      ? `Tumhara current age ${years} years ${months} months ${days} days hai`
+      : `Your current age is ${years} years ${months} months ${days} days`;
+
+    speakResult(voiceText);
+  }
 }
 
-function line(label, value, delay, className){
+function line(label, value){
   return `
-    <div class="info-line ${className}" style="animation-delay:${delay * 0.07}s">
+    <div class="info-line">
       <div class="info-left">${label}</div>
       <div class="info-value">${value}</div>
     </div>
   `;
 }
 
-function autoSaveResult(){
-  if(!lastSaveData) return;
-  let saved = JSON.parse(localStorage.getItem("agexpert_saved") || "[]");
-  const exists = saved.some(item => item.dobKey === lastSaveData.dobKey && item.gender === lastSaveData.gender);
-  if(!exists){
-    saved.unshift(lastSaveData);
-    localStorage.setItem("agexpert_saved", JSON.stringify(saved));
-    renderSavedResults();
+function openSavePopup(){
+
+  if(!lastSaveData){
+    showToast("Please calculate first");
+    return;
   }
+
+  tapFeedback();
+
+  document.getElementById("saveNameInput").value = "";
+  document.getElementById("saveOverlay").style.display = "flex";
+
+  setTimeout(()=>{
+    document.getElementById("saveNameInput").focus();
+  },100);
+}
+
+function closeSavePopup(){
+  document.getElementById("saveOverlay").style.display = "none";
+}
+
+function confirmSaveResult(){
+
+  const name = document.getElementById("saveNameInput").value.trim();
+
+  if(name.length < 1){
+    showToast("Enter Name");
+    return;
+  }
+
+  let saved = JSON.parse(localStorage.getItem("agexpert_saved") || "[]");
+
+  const exists = saved.some(item =>
+    item.name &&
+    item.name.toLowerCase() === name.toLowerCase()
+  );
+
+  if(exists){
+    showToast("Name already exists");
+    return;
+  }
+
+  saved.unshift({
+    ...lastSaveData,
+    name:name
+  });
+
+  localStorage.setItem("agexpert_saved", JSON.stringify(saved));
+
+  closeSavePopup();
+  renderSavedResults();
+  showToast("Saved Successfully");
+  playSound();
 }
 
 function renderSavedResults(){
+
   const box = document.getElementById("savedList");
+  const bar = document.getElementById("selectionBar");
+  const count = document.getElementById("selectedCount");
+
   if(!box) return;
+
   let saved = JSON.parse(localStorage.getItem("agexpert_saved") || "[]");
 
+  if(selectedSaved.length > 0){
+    bar.style.display = "flex";
+    count.innerText = selectedSaved.length + " Selected";
+  }else{
+    bar.style.display = "none";
+  }
+
   if(saved.length === 0){
-    box.innerHTML = `<p class="app-info">No saved results yet. Analyze an age and it will save automatically.</p>`;
+    box.innerHTML = `<p class="app-info">No saved results yet.</p>`;
     return;
   }
 
   box.innerHTML = saved.map(item=>`
-    <div class="saved-item">
-      <h3>${item.age}</h3>
-      <p>
-        Gender: ${item.gender}<br>
-        Born on: ${item.bornDay}<br>
-        Zodiac: ${item.zodiac}<br>
-        Next Birthday: ${item.nextBirthday}<br>
-        Birth Season: ${item.season}<br>
-        Saved: ${item.savedAt}
-      </p>
-      <button class="delete-btn" onclick="deleteSavedResult(${item.id})">Delete</button>
+    <div class="saved-item ${selectedSaved.includes(item.id) ? "selected" : ""}"
+      onmousedown="startLongPress(${item.id})"
+      onmouseup="cancelLongPress()"
+      onmouseleave="cancelLongPress()"
+      ontouchstart="startLongPress(${item.id})"
+      ontouchend="cancelLongPress()">
+
+      <div class="saved-top">
+        <div>
+          <h3>${item.name}</h3>
+          <p>
+            Age: ${item.age}<br>
+            Gender: ${item.gender}<br>
+            Born on: ${item.bornDay}<br>
+            Zodiac: ${item.zodiac}<br>
+            Next Birthday: ${item.nextBirthday}<br>
+            Birth Season: ${item.season}<br>
+            Lucky Number: ${item.luckyNumber}<br>
+            Saved: ${item.savedAt}
+          </p>
+        </div>
+
+        <button class="menu-btn" onclick="toggleSavedMenu(event, ${item.id})">⋮</button>
+      </div>
+
+      <div class="popup-menu" id="menu-${item.id}">
+        <button onclick="deleteSingleSaved(${item.id})">Delete</button>
+      </div>
     </div>
   `).join("");
 }
 
-function deleteSavedResult(id){
-  tapFeedback();
-  let saved = JSON.parse(localStorage.getItem("agexpert_saved") || "[]");
-  saved = saved.filter(item=>item.id !== id);
-  localStorage.setItem("agexpert_saved", JSON.stringify(saved));
-  renderSavedResults();
-  showToast("Deleted");
+let longPressTimer = null;
+
+function startLongPress(id){
+  longPressTimer = setTimeout(()=>{
+    toggleSavedSelect(id);
+  },600);
 }
 
-function clearSavedResults(){
+function cancelLongPress(){
+  clearTimeout(longPressTimer);
+}
+
+function toggleSavedSelect(id){
+
   tapFeedback();
-  localStorage.removeItem("agexpert_saved");
+
+  if(selectedSaved.includes(id)){
+    selectedSaved = selectedSaved.filter(x => x !== id);
+  }else{
+    selectedSaved.push(id);
+  }
+
   renderSavedResults();
-  showToast("Saved History Cleared");
+}
+
+function toggleSavedMenu(event, id){
+
+  event.stopPropagation();
+
+  document.querySelectorAll(".popup-menu").forEach(menu=>{
+    menu.style.display = "none";
+  });
+
+  const menu = document.getElementById("menu-" + id);
+
+  if(menu){
+    menu.style.display = "block";
+  }
+}
+
+document.addEventListener("click", ()=>{
+  document.querySelectorAll(".popup-menu").forEach(menu=>{
+    menu.style.display = "none";
+  });
+});
+
+function deleteSingleSaved(id){
+
+  const ok = confirm("Delete this saved result?");
+
+  if(!ok) return;
+
+  let saved = JSON.parse(localStorage.getItem("agexpert_saved") || "[]");
+
+  saved = saved.filter(item => item.id !== id);
+
+  localStorage.setItem("agexpert_saved", JSON.stringify(saved));
+
+  selectedSaved = selectedSaved.filter(x => x !== id);
+
+  renderSavedResults();
+
+  showToast("Deleted Successfully");
+}
+
+function selectAllSaved(){
+
+  let saved = JSON.parse(localStorage.getItem("agexpert_saved") || "[]");
+
+  selectedSaved = saved.map(item => item.id);
+
+  renderSavedResults();
+}
+
+function deleteSelectedSaved(){
+
+  if(selectedSaved.length === 0){
+    showToast("Select item first");
+    return;
+  }
+
+  const ok = confirm("Delete selected saved results?");
+
+  if(!ok) return;
+
+  let saved = JSON.parse(localStorage.getItem("agexpert_saved") || "[]");
+
+  saved = saved.filter(item => !selectedSaved.includes(item.id));
+
+  localStorage.setItem("agexpert_saved", JSON.stringify(saved));
+
+  selectedSaved = [];
+
+  renderSavedResults();
+
+  showToast("Deleted Successfully");
 }
 
 function compareAges(){
+
   tapFeedback();
+
   const date1 = makeDate("c1day","c1month","c1year");
   const date2 = makeDate("c2day","c2month","c2year");
 
-  if(date1 === null || date2 === null){ showToast("Please select both full DOB"); return; }
-  if(date1 === "invalid" || date2 === "invalid"){ showToast("Invalid date selected"); return; }
-  if(date1 > new Date() || date2 > new Date()){ showToast("Future DOB not allowed"); return; }
+  if(date1 === null || date2 === null){
+    showToast("Please select both full DOB");
+    return;
+  }
 
-  let olderText = date1 < date2 ? "First person is older" : date2 < date1 ? "Second person is older" : "Both are same age";
-  const gapDays = Math.abs(Math.floor((date1 - date2) / (1000*60*60*24)));
+  if(date1 === "invalid" || date2 === "invalid"){
+    showToast("Invalid date selected");
+    return;
+  }
+
+  if(date1 > new Date() || date2 > new Date()){
+    showToast("Future DOB not allowed");
+    return;
+  }
+
+  const olderText =
+    date1 < date2
+    ? "First person is older"
+    : date2 < date1
+    ? "Second person is older"
+    : "Both are same age";
+
+  const gapDays =
+    Math.abs(Math.floor((date1 - date2) / (1000*60*60*24)));
+
   const gapYears = Math.floor(gapDays / 365);
   const remainingDays = gapDays % 365;
 
   document.getElementById("compareResult").innerHTML = `
     <div class="card">
-      <div class="info-line"><div class="info-left">Result</div><div class="info-value">${olderText}</div></div>
-      <div class="info-line"><div class="info-left">Age Gap</div><div class="info-value">${gapYears} Years ${remainingDays} Days</div></div>
-      <div class="info-line"><div class="info-left">Total Gap Days</div><div class="info-value">${gapDays.toLocaleString()} Days</div></div>
+      <div class="info-line">
+        <div class="info-left">Result</div>
+        <div class="info-value">${olderText}</div>
+      </div>
+
+      <div class="info-line">
+        <div class="info-left">Age Gap</div>
+        <div class="info-value">${gapYears} Years ${remainingDays} Days</div>
+      </div>
+
+      <div class="info-line">
+        <div class="info-left">Total Gap Days</div>
+        <div class="info-value">${gapDays.toLocaleString()} Days</div>
+      </div>
     </div>
   `;
+
   playSound();
 }
 
 function resetApp(){
+
   tapFeedback();
+
   document.getElementById("day").value = "";
   document.getElementById("month").value = "";
   document.getElementById("year").value = "";
-  document.querySelectorAll(".gender-box").forEach(g=>g.classList.remove("active"));
+
+  document.querySelectorAll(".gender-box").forEach(g=>{
+    g.classList.remove("active");
+  });
+
   document.querySelector(".gender-box").classList.add("active");
+
   selectedGender = "Male";
   dobValue = null;
   lastResult = "";
   lastSaveData = null;
-  if(liveTimer) clearInterval(liveTimer);
+
+  if(liveTimer){
+    clearInterval(liveTimer);
+  }
+
+  if("speechSynthesis" in window){
+    speechSynthesis.cancel();
+  }
+
   document.getElementById("loadingBox").style.display = "none";
   document.getElementById("resultBox").style.display = "none";
   document.getElementById("lifeBar").style.width = "0%";
+
   showToast("Refreshed Successfully");
 }
 
 function setTheme(theme){
+
   tapFeedback();
 
   if(theme === "aurora"){
@@ -1455,6 +2291,7 @@ function setTheme(theme){
     document.documentElement.style.setProperty("--softBg","#fff7fb");
     document.documentElement.style.setProperty("--softBg2","#f7f1ff");
   }
+
   if(theme === "ocean"){
     document.documentElement.style.setProperty("--primary","#0284c7");
     document.documentElement.style.setProperty("--primary2","#06b6d4");
@@ -1462,6 +2299,7 @@ function setTheme(theme){
     document.documentElement.style.setProperty("--softBg","#f0faff");
     document.documentElement.style.setProperty("--softBg2","#ecfeff");
   }
+
   if(theme === "mint"){
     document.documentElement.style.setProperty("--primary","#059669");
     document.documentElement.style.setProperty("--primary2","#10b981");
@@ -1470,7 +2308,10 @@ function setTheme(theme){
     document.documentElement.style.setProperty("--softBg2","#ecfdf5");
   }
 
-  document.querySelectorAll("#themeAurora,#themeOcean,#themeMint").forEach(btn=>btn.classList.remove("active"));
+  document.querySelectorAll("#themeAurora,#themeOcean,#themeMint").forEach(btn=>{
+    btn.classList.remove("active");
+  });
+
   if(theme === "aurora") document.getElementById("themeAurora").classList.add("active");
   if(theme === "ocean") document.getElementById("themeOcean").classList.add("active");
   if(theme === "mint") document.getElementById("themeMint").classList.add("active");
@@ -1479,43 +2320,82 @@ function setTheme(theme){
 }
 
 function toggleAnimation(){
+
   tapFeedback();
+
   animationEnabled = !animationEnabled;
+
   document.getElementById("animSwitch").classList.toggle("off", !animationEnabled);
+
   document.body.classList.toggle("no-anim", !animationEnabled);
+
   localStorage.setItem("agexpert_animation", animationEnabled ? "on" : "off");
 }
 
 function toggleVibration(){
+
   vibrationEnabled = !vibrationEnabled;
+
   document.getElementById("vibrationSwitch").classList.toggle("off", !vibrationEnabled);
+
   localStorage.setItem("agexpert_vibration", vibrationEnabled ? "on" : "off");
 }
 
 function toggleSound(){
+
   tapFeedback();
+
   soundEnabled = !soundEnabled;
+
   document.getElementById("soundSwitch").classList.toggle("off", !soundEnabled);
+
   localStorage.setItem("agexpert_sound", soundEnabled ? "on" : "off");
+
   if(soundEnabled) playSound();
 }
 
-function toggleAutoSave(){
+function toggleVoice(){
+
   tapFeedback();
-  autoSaveEnabled = !autoSaveEnabled;
-  document.getElementById("autoSaveSwitch").classList.toggle("off", !autoSaveEnabled);
-  localStorage.setItem("agexpert_autosave", autoSaveEnabled ? "on" : "off");
+
+  voiceEnabled = !voiceEnabled;
+
+  document.getElementById("voiceSwitch").classList.toggle("off", !voiceEnabled);
+
+  localStorage.setItem("agexpert_voice", voiceEnabled ? "on" : "off");
+}
+
+function toggleDarkMode(){
+
+  tapFeedback();
+
+  darkModeEnabled = !darkModeEnabled;
+
+  document.body.classList.toggle("dark", darkModeEnabled);
+
+  document.getElementById("darkSwitch").classList.toggle("off", !darkModeEnabled);
+
+  localStorage.setItem("agexpert_dark", darkModeEnabled ? "on" : "off");
 }
 
 function toggleLiveUpdate(){
+
   tapFeedback();
+
   liveUpdateEnabled = !liveUpdateEnabled;
+
   document.getElementById("liveSwitch").classList.toggle("off", !liveUpdateEnabled);
 
   if(liveUpdateEnabled && dobValue){
+
     if(liveTimer) clearInterval(liveTimer);
-    liveTimer = setInterval(()=>updateResult(false),1000);
+
+    liveTimer = setInterval(()=>{
+      updateResult(false);
+    },1000);
+
   }else{
+
     if(liveTimer) clearInterval(liveTimer);
   }
 
@@ -1523,66 +2403,114 @@ function toggleLiveUpdate(){
 }
 
 function toggleCompactMode(){
+
   tapFeedback();
+
   compactModeEnabled = !compactModeEnabled;
+
   document.getElementById("compactSwitch").classList.toggle("off", !compactModeEnabled);
+
   document.body.classList.toggle("compact", compactModeEnabled);
+
   localStorage.setItem("agexpert_compact", compactModeEnabled ? "on" : "off");
 }
 
 function setLifeBase(age){
+
   tapFeedback();
+
   lifeBaseAge = age;
-  document.querySelectorAll("#life75,#life80,#life90").forEach(btn=>btn.classList.remove("active"));
+
+  document.querySelectorAll("#life75,#life80,#life90").forEach(btn=>{
+    btn.classList.remove("active");
+  });
+
   document.getElementById("life"+age).classList.add("active");
+
   document.getElementById("lifeBaseText").innerText = age;
+
   localStorage.setItem("agexpert_life_base", age);
-  if(dobValue) updateResult(false);
+
+  if(dobValue){
+    updateResult(false);
+  }
 }
 
 function loadSettings(){
+
   currentLang = localStorage.getItem("agexpert_lang") || "en";
+
   setTheme(localStorage.getItem("agexpert_theme") || "aurora");
 
-  animationEnabled = (localStorage.getItem("agexpert_animation") || "on") === "on";
-  vibrationEnabled = (localStorage.getItem("agexpert_vibration") || "on") === "on";
-  soundEnabled = (localStorage.getItem("agexpert_sound") || "on") === "on";
-  autoSaveEnabled = (localStorage.getItem("agexpert_autosave") || "on") === "on";
-  liveUpdateEnabled = (localStorage.getItem("agexpert_live") || "on") === "on";
-  compactModeEnabled = (localStorage.getItem("agexpert_compact") || "off") === "on";
-  lifeBaseAge = parseInt(localStorage.getItem("agexpert_life_base") || "75");
+  animationEnabled =
+    (localStorage.getItem("agexpert_animation") || "on") === "on";
+
+  vibrationEnabled =
+    (localStorage.getItem("agexpert_vibration") || "on") === "on";
+
+  soundEnabled =
+    (localStorage.getItem("agexpert_sound") || "on") === "on";
+
+  voiceEnabled =
+    (localStorage.getItem("agexpert_voice") || "on") === "on";
+
+  darkModeEnabled =
+    (localStorage.getItem("agexpert_dark") || "off") === "on";
+
+  liveUpdateEnabled =
+    (localStorage.getItem("agexpert_live") || "on") === "on";
+
+  compactModeEnabled =
+    (localStorage.getItem("agexpert_compact") || "off") === "on";
+
+  lifeBaseAge =
+    parseInt(localStorage.getItem("agexpert_life_base") || "75");
+
+  document.body.classList.toggle("no-anim", !animationEnabled);
+  document.body.classList.toggle("compact", compactModeEnabled);
+  document.body.classList.toggle("dark", darkModeEnabled);
 
   document.getElementById("animSwitch").classList.toggle("off", !animationEnabled);
   document.getElementById("vibrationSwitch").classList.toggle("off", !vibrationEnabled);
   document.getElementById("soundSwitch").classList.toggle("off", !soundEnabled);
-  document.getElementById("autoSaveSwitch").classList.toggle("off", !autoSaveEnabled);
+  document.getElementById("voiceSwitch").classList.toggle("off", !voiceEnabled);
+  document.getElementById("darkSwitch").classList.toggle("off", !darkModeEnabled);
   document.getElementById("liveSwitch").classList.toggle("off", !liveUpdateEnabled);
   document.getElementById("compactSwitch").classList.toggle("off", !compactModeEnabled);
 
-  document.body.classList.toggle("no-anim", !animationEnabled);
-  document.body.classList.toggle("compact", compactModeEnabled);
+  document.querySelectorAll("#life75,#life80,#life90").forEach(btn=>{
+    btn.classList.remove("active");
+  });
 
-  document.querySelectorAll("#life75,#life80,#life90").forEach(btn=>btn.classList.remove("active"));
   if(document.getElementById("life"+lifeBaseAge)){
     document.getElementById("life"+lifeBaseAge).classList.add("active");
   }
+
   document.getElementById("lifeBaseText").innerText = lifeBaseAge;
 }
 
 function getNextBirthday(today, dob){
+
   let next = new Date(today.getFullYear(), dob.getMonth(), dob.getDate());
-  if(next < today) next.setFullYear(today.getFullYear()+1);
+
+  if(next < today){
+    next.setFullYear(today.getFullYear()+1);
+  }
+
   return Math.ceil((next - today) / (1000*60*60*24));
 }
 
 function getSeason(month){
+
   if(month === 12 || month === 1 || month === 2) return "Winter";
   if(month >= 3 && month <= 5) return "Spring";
   if(month >= 6 && month <= 8) return "Summer";
+
   return "Autumn";
 }
 
 function getZodiac(day, month){
+
   if((month==3 && day>=21)||(month==4 && day<=19)) return "Aries";
   if((month==4 && day>=20)||(month==5 && day<=20)) return "Taurus";
   if((month==5 && day>=21)||(month==6 && day<=20)) return "Gemini";
@@ -1594,10 +2522,12 @@ function getZodiac(day, month){
   if((month==11 && day>=22)||(month==12 && day<=21)) return "Sagittarius";
   if((month==12 && day>=22)||(month==1 && day<=19)) return "Capricorn";
   if((month==1 && day>=20)||(month==2 && day<=18)) return "Aquarius";
+
   return "Pisces";
 }
 
 function copyResult(){
+
   tapFeedback();
 
   if(!lastResult){
@@ -1606,21 +2536,29 @@ function copyResult(){
   }
 
   if(navigator.clipboard && window.isSecureContext){
+
     navigator.clipboard.writeText(lastResult).then(()=>{
       showToast("Copied Successfully");
       playSound();
-    }).catch(()=>fallbackCopy(lastResult));
+    }).catch(()=>{
+      fallbackCopy(lastResult);
+    });
+
   }else{
     fallbackCopy(lastResult);
   }
 }
 
 function fallbackCopy(text){
+
   const textarea = document.createElement("textarea");
+
   textarea.value = text;
   textarea.style.position = "fixed";
   textarea.style.left = "-9999px";
+
   document.body.appendChild(textarea);
+
   textarea.focus();
   textarea.select();
 
@@ -1636,11 +2574,34 @@ function fallbackCopy(text){
 }
 
 function showToast(msg){
+
   const toast = document.getElementById("toast");
+
   toast.innerText = msg;
   toast.style.display = "block";
-  setTimeout(()=>toast.style.display = "none",1800);
+
+  setTimeout(()=>{
+    toast.style.display = "none";
+  },1800);
 }
+
+function resetComparePage(){
+
+  tapFeedback();
+
+  document.getElementById("c1day").value = "";
+  document.getElementById("c1month").value = "";
+  document.getElementById("c1year").value = "";
+
+  document.getElementById("c2day").value = "";
+  document.getElementById("c2month").value = "";
+  document.getElementById("c2year").value = "";
+
+  document.getElementById("compareResult").innerHTML = "";
+
+  showToast("Compare Reset Successfully");
+}
+
 </script>
 
 </body>
